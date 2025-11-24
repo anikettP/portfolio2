@@ -7,7 +7,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Syne for headings, Space Grotesk for tech text -->
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -29,22 +28,18 @@
                     },
                     animation: {
                         'float': 'float 6s ease-in-out infinite',
-                        'slide-up-fade': 'slideUpFade 0.8s ease-out forwards',
-                        'pulse-glow': 'pulseGlow 3s infinite',
-                        'spin-slow': 'spin 12s linear infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'spin-slow': 'spin 20s linear infinite',
+                        'star-move': 'starMove 50s linear infinite',
                     },
                     keyframes: {
                         float: {
                             '0%, 100%': { transform: 'translateY(0)' },
                             '50%': { transform: 'translateY(-10px)' },
                         },
-                        slideUpFade: {
-                            '0%': { opacity: '0', transform: 'translateY(20px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
-                        },
-                        pulseGlow: {
-                            '0%, 100%': { opacity: '0.4' },
-                            '50%': { opacity: '1' },
+                        starMove: {
+                            '0%': { backgroundPosition: '0 0' },
+                            '100%': { backgroundPosition: '0 1000px' },
                         }
                     }
                 }
@@ -53,22 +48,42 @@
     </script>
 
     <style>
-        /* Base Settings */
         html { scroll-behavior: smooth; }
-        body { background-color: #F8FAFC; perspective: 1000px; }
+        body { background-color: #F8FAFC; perspective: 1000px; overflow-x: hidden; }
 
-        /* Background Photo */
-        .bg-portrait {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -20;
-            opacity: 0.12; 
-            background-image: url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1888&auto=format&fit=crop'); 
-            background-size: cover; background-position: center; filter: grayscale(100%) contrast(120%);
+        /* --- BACKGROUND DYNAMICS --- */
+        .premium-header-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 90vh;
+            background-image: url('https://images.unsplash.com/photo-1614730341194-75c6074065db?q=80&w=2874&auto=format&fit=crop');
+            background-size: cover; background-position: center; opacity: 0.1;
+            mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
+            z-index: -20; filter: grayscale(100%) contrast(1.2);
         }
         
-        .noise-overlay {
+        /* Starfall Animation */
+        .starfall {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
-            pointer-events: none; z-index: 50;
+            background-image: 
+                radial-gradient(white 1px, transparent 1px),
+                radial-gradient(rgba(255,255,255,0.5) 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.3;
+            z-index: -10;
+            animation: starMove 60s linear infinite;
+        }
+
+        /* --- NAME PLACEHOLDER (NEBULA) --- */
+        .name-halo {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120%; height: 120%;
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.15) 0%, rgba(139, 92, 246, 0.05) 40%, transparent 70%);
+            filter: blur(40px);
+            z-index: -1;
+            border-radius: 50%;
+            animation: pulse 5s infinite ease-in-out;
         }
 
         /* --- 3D TILT ENGINE --- */
@@ -78,321 +93,319 @@
             border: 1px solid rgba(255, 255, 255, 0.9);
             border-radius: 1.5rem;
             transform-style: preserve-3d; transform: perspective(1000px);
-            transition: transform 0.1s ease-out; position: relative; overflow: hidden;
+            transition: transform 0.1s ease-out; position: relative; overflow: visible;
         }
         .tilt-card:hover {
             box-shadow: 0 20px 50px -10px rgba(124, 58, 237, 0.2), 0 0 0 1px rgba(139, 92, 246, 0.3);
+            z-index: 20;
         }
         .tilt-content { transform: translateZ(30px); position: relative; z-index: 10; }
 
-        /* --- NEW OVERLAPPING CARD DECK STYLES --- */
+        /* --- SKILL DECK --- */
         .deck-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 400px;
-            perspective: 1000px;
-            padding: 2rem 0;
-            overflow-x: auto; /* Allow scroll on mobile */
-            overflow-y: visible;
+            display: flex; justify-content: center; align-items: center; height: 380px; perspective: 1000px; padding: 2rem 0; overflow-x: auto; overflow-y: visible;
         }
-
         .deck-card {
-            width: 240px;
-            height: 320px;
-            background: rgba(15, 23, 42, 0.85); /* Dark Obsidian Glass */
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 1.5rem;
-            position: relative;
-            margin-left: -120px; /* The Overlap Magic */
-            transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-            transform-origin: center bottom;
-            box-shadow: -10px 0 30px rgba(0,0,0,0.3);
-            cursor: pointer;
-            overflow: hidden;
-            display: flex;
-            flex-col: column;
-            align-items: center;
-            justify-content: center;
+            min-width: 220px; height: 300px; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 1.5rem; position: relative;
+            margin-left: -110px; transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1); transform-origin: center bottom;
+            box-shadow: -10px 0 30px rgba(0,0,0,0.3); cursor: pointer; overflow: hidden;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
-
-        /* First card shouldn't have negative margin */
         .deck-card:first-child { margin-left: 0; }
+        .deck-container:hover .deck-card { margin-left: -40px; transform: rotateY(10deg) scale(0.9); }
+        .deck-card:hover { transform: translateY(-30px) rotateY(0deg) scale(1.1) !important; z-index: 50; background: rgba(15, 23, 42, 0.95); border-color: rgba(139, 92, 246, 0.5); box-shadow: 0 20px 60px rgba(124, 58, 237, 0.4); margin-left: 20px !important; margin-right: 20px !important; }
+        .deck-card:hover ~ .deck-card { transform: translateX(40px) rotateY(-10deg) scale(0.9) !important; }
+        .card-bg-glow { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 150%; height: 150%; background: radial-gradient(circle, var(--glow-color, rgba(124,58,237,0.2)) 0%, transparent 70%); opacity: 0.3; animation: pulse-glow 4s infinite; pointer-events: none; }
 
-        /* Hover Effect: Fan Out */
-        .deck-container:hover .deck-card {
-            margin-left: -40px; /* Reduce overlap */
-            transform: rotateY(10deg) scale(0.9); /* Default fan state */
-        }
-
-        /* Specific Card Hover */
-        .deck-card:hover {
-            transform: translateY(-30px) rotateY(0deg) scale(1.1) !important;
-            z-index: 50;
-            background: rgba(15, 23, 42, 0.95);
-            border-color: rgba(139, 92, 246, 0.5);
-            box-shadow: 0 20px 60px rgba(124, 58, 237, 0.4);
-            margin-left: 20px !important; /* Push neighbors away */
-            margin-right: 20px !important;
-        }
-
-        /* Sibling Selector for smoothness */
-        .deck-card:hover ~ .deck-card {
-            transform: translateX(40px) rotateY(-10deg) scale(0.9) !important;
-        }
-
-        /* Animated SVG Background inside cards */
-        .card-bg-glow {
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 150%; height: 150%;
-            background: radial-gradient(circle, var(--glow-color, rgba(124,58,237,0.2)) 0%, transparent 70%);
-            opacity: 0.3;
-            animation: pulse-glow 4s infinite;
-            pointer-events: none;
-        }
-
-        /* Mobile adjustments */
         @media (max-width: 768px) {
-            .deck-container {
-                justify-content: flex-start;
-                padding-left: 20px;
-                padding-right: 20px;
-            }
-            .deck-card {
-                min-width: 240px;
-                margin-left: -40px;
-            }
+            .deck-container { justify-content: flex-start; padding-left: 20px; padding-right: 20px; }
+            .deck-card { min-width: 220px; margin-left: -40px; }
         }
         
-        /* Folder Styles (Kept) */
-        .folder-container {
-            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); overflow: hidden; height: 120px; cursor: pointer; position: relative;
-            background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.8); border-left: 4px solid #8B5CF6;
+        /* --- PROJECT LAUNCHER --- */
+        .launch-pad {
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: center;
         }
-        .folder-container.open { height: auto; cursor: default; background: rgba(255, 255, 255, 0.8); border-color: rgba(124, 58, 237, 0.3); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15); }
-        .folder-tab { position: absolute; top: 0; left: 0; width: 100%; height: 120px; display: flex; align-items: center; justify-content: space-between; padding: 0 3rem; z-index: 20; background: linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.5) 100%); }
-        .folder-content { opacity: 0; transform: translateY(20px); transition: all 0.5s ease; pointer-events: none; padding-top: 140px; padding-bottom: 2rem; padding-left: 2rem; padding-right: 2rem; }
-        .folder-container.open .folder-content { opacity: 1; transform: translateY(0); pointer-events: auto; }
-        .folder-icon { transition: transform 0.5s ease; }
-        .folder-container.open .folder-icon { transform: rotate(90deg); }
-        .project-card { opacity: 0; transform: translateY(30px); }
-        .folder-container.open .project-card { animation: slideUpFade 0.6s forwards; }
-        .folder-container.open .project-card:nth-child(1) { animation-delay: 0.1s; }
-        .folder-container.open .project-card:nth-child(2) { animation-delay: 0.2s; }
-        .folder-container.open .project-card:nth-child(3) { animation-delay: 0.3s; }
+        .launch-pad.deployed {
+            opacity: 0;
+            transform: scale(1.1);
+            pointer-events: none;
+            display: none;
+        }
+
+        .projects-grid { display: none; perspective: 2000px; }
+        .projects-grid.active { display: grid; grid-template-columns: repeat(1, minmax(0, 1fr)); gap: 2rem; animation: fadeIn 0.5s forwards; }
+        @media (min-width: 1024px) { .projects-grid.active { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+        /* 3D Pop Animation */
+        .pop-card {
+            opacity: 0;
+            transform: scale(0.5) rotateX(-90deg) translateY(100px);
+            animation: deployCard 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+        .pop-card:nth-child(1) { animation-delay: 0.1s; }
+        .pop-card:nth-child(2) { animation-delay: 0.2s; }
+        .pop-card:nth-child(3) { animation-delay: 0.3s; }
+
+        @keyframes deployCard {
+            0% { opacity: 0; transform: scale(0.5) rotateX(-90deg) translateY(100px); }
+            100% { opacity: 1; transform: scale(1) rotateX(0deg) translateY(0); }
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* --- LIVE PREVIEW MOCKUP --- */
+        .browser-mockup {
+            position: absolute;
+            bottom: 20px; right: 20px;
+            width: 200px; height: 140px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.3);
+            transform: rotate(-5deg) translateY(0);
+            transition: all 0.4s ease;
+            z-index: 20;
+        }
+        .group:hover .browser-mockup {
+            transform: rotate(0deg) translateY(-10px) scale(1.1);
+            border-color: #A855F7;
+        }
+        .browser-header {
+            height: 12px; background: #f1f5f9; display: flex; align-items: center; gap: 4px; padding-left: 8px;
+        }
+        .browser-dot { width: 4px; height: 4px; border-radius: 50%; background: #cbd5e1; }
+        .browser-content {
+            width: 100%; height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=800&auto=format&fit=crop'); /* Fashion Placeholder */
+            background-size: cover; background-position: top;
+        }
 
     </style>
 </head>
 <body class="text-moon-void antialiased">
 
-    <div class="noise-overlay"></div>
-    <div class="bg-portrait"></div>
-    <div class="fixed inset-0 bg-gradient-to-b from-white/90 via-white/80 to-white/95 z-[-10]"></div>
+    <div class="premium-header-bg"></div>
+    <div class="starfall"></div>
 
-    <main class="max-w-7xl mx-auto px-6 py-12 md:py-20 space-y-24">
+    <main class="max-w-7xl mx-auto px-6 py-12 md:py-20 space-y-24 relative z-10">
 
-        <!-- 1. RESUME HEADER -->
+        <!-- 1. RESUME HEADER WITH PLACEHOLDER -->
         <header class="text-center relative z-10 animate-slide-up-fade">
             <div class="inline-block relative">
-                <div class="absolute inset-0 bg-gradient-to-r from-purple-200 to-blue-200 blur-2xl opacity-60 -z-10 rounded-full transform scale-110"></div>
-                <h1 class="font-display font-extrabold text-7xl md:text-9xl tracking-tight text-moon-void mb-4 drop-shadow-sm">
+                <!-- New Nebula Halo Placeholder Behind Name -->
+                <div class="name-halo"></div>
+                <h1 class="font-display font-extrabold text-7xl md:text-9xl tracking-tight text-moon-void mb-4 drop-shadow-sm relative z-10">
                     NIDHI MISHRA
                 </h1>
             </div>
             <p class="font-sans text-lg md:text-xl font-medium tracking-[0.2em] text-purple-600 uppercase mb-8">
                 Backend Architect & Database Engineer
             </p>
-            <div class="flex flex-wrap justify-center gap-8 text-sm font-bold tracking-widest text-gray-500 uppercase">
+            <div class="flex flex-wrap justify-center gap-6 md:gap-8 text-xs md:text-sm font-bold tracking-widest text-gray-500 uppercase">
                 <a href="mailto:mishra2004nidhi@gmail.com" class="hover:text-purple-600 transition-colors flex items-center gap-2 group">
-                    <span class="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center group-hover:border-purple-400 group-hover:text-purple-600 transition-all"><i class="fa-regular fa-envelope"></i></span> Email Me
+                    <i class="fa-regular fa-envelope text-lg"></i> Email Me
                 </a>
                 <span class="text-gray-300 self-center">|</span>
                 <span class="flex items-center gap-2">
-                     <span class="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center"><i class="fa-solid fa-location-dot"></i></span> Rajasthan, India
+                     <i class="fa-solid fa-location-dot text-lg"></i> Rajasthan
                 </span>
                 <span class="text-gray-300 self-center">|</span>
                 <a href="https://github.com/mishra2004nidhi" target="_blank" class="hover:text-purple-600 transition-colors flex items-center gap-2 group">
-                    <span class="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center group-hover:border-purple-400 group-hover:text-purple-600 transition-all"><i class="fa-brands fa-github"></i></span> GitHub
+                    <i class="fa-brands fa-github text-lg"></i> GitHub
                 </a>
             </div>
         </header>
 
         <!-- 2. SUMMARY CARD -->
         <section class="animate-slide-up-fade max-w-5xl mx-auto" style="animation-delay: 0.2s;">
-            <div class="tilt-card p-12 md:p-16 text-center relative group">
+            <div class="tilt-card p-8 md:p-16 text-center relative group">
                 <div class="tilt-content">
-                    <h2 class="font-display font-bold text-3xl mb-8 flex items-center justify-center gap-4 text-moon-void">
-                        <i class="fa-solid fa-moon text-purple-400 text-2xl animate-pulse"></i>
+                    <h2 class="font-display font-bold text-2xl md:text-3xl mb-6 md:mb-8 flex items-center justify-center gap-4 text-moon-void">
+                        <i class="fa-solid fa-moon text-purple-400 text-xl md:text-2xl animate-pulse"></i>
                         Professional Summary
-                        <i class="fa-solid fa-moon text-purple-400 text-2xl animate-pulse"></i>
+                        <i class="fa-solid fa-moon text-purple-400 text-xl md:text-2xl animate-pulse"></i>
                     </h2>
-                    <p class="font-sans text-lg md:text-xl text-gray-600 leading-relaxed max-w-4xl mx-auto font-light">
+                    <p class="font-sans text-base md:text-xl text-gray-600 leading-relaxed max-w-4xl mx-auto font-light">
                         Computer Science undergraduate with hands-on experience in <strong class="text-purple-700 font-semibold">Backend Development</strong> and <strong class="text-purple-700 font-semibold">Database Management</strong>. Skilled in designing scalable MongoDB architectures, optimizing API workflows, and building clean, functional components for real-world applications. Recently contributed to a live e-commerce platform within the <strong class="text-moon-void font-bold">MOON startup ecosystem</strong>.
                     </p>
                 </div>
             </div>
         </section>
 
-        <!-- 3. NEW OVERLAPPING SKILL DECK -->
+        <!-- 3. SKILL DECK -->
         <section class="animate-slide-up-fade" style="animation-delay: 0.3s;">
             <h3 class="font-display font-bold text-xl text-gray-400 uppercase tracking-widest text-center mb-4">Technical Arsenal</h3>
             <p class="text-center text-xs text-purple-400 font-bold uppercase tracking-widest mb-10 opacity-70">Hover over the deck to reveal</p>
             
             <div class="deck-container">
-                
-                <!-- Card 1: Node -->
+                <!-- Cards... (Same as before but clean) -->
                 <div class="deck-card" style="--glow-color: rgba(34, 197, 94, 0.4)">
                     <div class="card-bg-glow"></div>
                     <div class="relative z-10 flex flex-col items-center gap-6">
-                        <i class="fa-brands fa-node text-6xl text-green-500 drop-shadow-[0_0_10px_rgba(34,197,94,0.5)]"></i>
+                        <i class="fa-brands fa-node text-6xl text-green-500"></i>
                         <h4 class="text-white font-display font-bold text-2xl">Node.js</h4>
                         <span class="text-gray-400 text-xs font-bold uppercase tracking-widest border-t border-gray-700 pt-2">Runtime</span>
                     </div>
                 </div>
-
-                <!-- Card 2: MongoDB -->
                 <div class="deck-card" style="--glow-color: rgba(34, 197, 94, 0.4)">
                     <div class="card-bg-glow"></div>
                     <div class="relative z-10 flex flex-col items-center gap-6">
-                        <i class="fa-solid fa-database text-6xl text-green-400 drop-shadow-[0_0_10px_rgba(74,222,128,0.5)]"></i>
+                        <i class="fa-solid fa-database text-6xl text-green-400"></i>
                         <h4 class="text-white font-display font-bold text-2xl">MongoDB</h4>
                         <span class="text-gray-400 text-xs font-bold uppercase tracking-widest border-t border-gray-700 pt-2">NoSQL DB</span>
                     </div>
                 </div>
-
-                <!-- Card 3: Java -->
                 <div class="deck-card" style="--glow-color: rgba(249, 115, 22, 0.4)">
                     <div class="card-bg-glow"></div>
                     <div class="relative z-10 flex flex-col items-center gap-6">
-                        <i class="fa-brands fa-java text-6xl text-orange-500 drop-shadow-[0_0_10px_rgba(249,115,22,0.5)]"></i>
+                        <i class="fa-brands fa-java text-6xl text-orange-500"></i>
                         <h4 class="text-white font-display font-bold text-2xl">Java</h4>
                         <span class="text-gray-400 text-xs font-bold uppercase tracking-widest border-t border-gray-700 pt-2">Core Logic</span>
                     </div>
                 </div>
-
-                <!-- Card 4: Python -->
-                <div class="deck-card" style="--glow-color: rgba(59, 130, 246, 0.4)">
+                 <div class="deck-card" style="--glow-color: rgba(59, 130, 246, 0.4)">
                     <div class="card-bg-glow"></div>
                     <div class="relative z-10 flex flex-col items-center gap-6">
-                        <i class="fa-brands fa-python text-6xl text-blue-500 drop-shadow-[0_0_10px_rgba(59,130,246,0.5)]"></i>
+                        <i class="fa-brands fa-python text-6xl text-blue-500"></i>
                         <h4 class="text-white font-display font-bold text-2xl">Python</h4>
                         <span class="text-gray-400 text-xs font-bold uppercase tracking-widest border-t border-gray-700 pt-2">Scripting</span>
                     </div>
                 </div>
-
-                <!-- Card 5: Express -->
-                <div class="deck-card" style="--glow-color: rgba(168, 85, 247, 0.4)">
-                    <div class="card-bg-glow"></div>
-                    <div class="relative z-10 flex flex-col items-center gap-6">
-                        <i class="fa-solid fa-server text-6xl text-gray-300 drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]"></i>
-                        <h4 class="text-white font-display font-bold text-2xl">Express</h4>
-                        <span class="text-gray-400 text-xs font-bold uppercase tracking-widest border-t border-gray-700 pt-2">Backend</span>
-                    </div>
-                </div>
-
-                <!-- Card 6: JS -->
                 <div class="deck-card" style="--glow-color: rgba(234, 179, 8, 0.4)">
                     <div class="card-bg-glow"></div>
                     <div class="relative z-10 flex flex-col items-center gap-6">
-                        <i class="fa-brands fa-js text-6xl text-yellow-400 drop-shadow-[0_0_10px_rgba(234,179,8,0.5)]"></i>
-                        <h4 class="text-white font-display font-bold text-2xl">JavaScript</h4>
+                        <i class="fa-brands fa-js text-6xl text-yellow-400"></i>
+                        <h4 class="text-white font-display font-bold text-2xl">JS</h4>
                         <span class="text-gray-400 text-xs font-bold uppercase tracking-widest border-t border-gray-700 pt-2">Interactive</span>
                     </div>
                 </div>
-
-                <!-- Card 7: Git -->
-                <div class="deck-card" style="--glow-color: rgba(239, 68, 68, 0.4)">
+                 <div class="deck-card" style="--glow-color: rgba(239, 68, 68, 0.4)">
                     <div class="card-bg-glow"></div>
                     <div class="relative z-10 flex flex-col items-center gap-6">
-                        <i class="fa-brands fa-git-alt text-6xl text-red-500 drop-shadow-[0_0_10px_rgba(239,68,68,0.5)]"></i>
+                        <i class="fa-brands fa-git-alt text-6xl text-red-500"></i>
                         <h4 class="text-white font-display font-bold text-2xl">Git</h4>
-                        <span class="text-gray-400 text-xs font-bold uppercase tracking-widest border-t border-gray-700 pt-2">Version Control</span>
+                        <span class="text-gray-400 text-xs font-bold uppercase tracking-widest border-t border-gray-700 pt-2">Version</span>
                     </div>
                 </div>
-
             </div>
         </section>
 
-        <!-- 4. PROJECT FOLDER (Max Width) -->
-        <section class="animate-slide-up-fade max-w-5xl mx-auto" style="animation-delay: 0.4s;">
-            <div id="projectFolder" class="folder-container rounded-[2rem] shadow-2xl" onclick="toggleFolder()">
-                <div class="folder-tab">
-                    <div class="flex items-center gap-6">
-                        <div class="w-20 h-20 rounded-2xl bg-white border border-purple-100 text-purple-600 flex items-center justify-center text-3xl shadow-lg">
-                            <i class="fa-solid fa-folder-open"></i>
+        <!-- 4. PROJECT MANAGER (Click to Deploy) -->
+        <section class="animate-slide-up-fade max-w-7xl mx-auto" style="animation-delay: 0.4s;">
+            <div class="relative">
+                
+                <!-- "Launch Pad" Trigger (Replaces Folder) -->
+                <div id="launchPad" class="launch-pad mx-auto w-full max-w-md bg-gradient-to-r from-purple-600 to-blue-600 p-[1px] rounded-full shadow-2xl group" onclick="activateProjects()">
+                    <div class="bg-white rounded-full px-8 py-4 flex items-center justify-between cursor-pointer group-hover:bg-transparent group-hover:text-white transition-colors duration-300">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center group-hover:bg-white group-hover:text-purple-600">
+                                <i class="fa-solid fa-rocket"></i>
+                            </div>
+                            <span class="font-display font-bold text-lg tracking-wide uppercase">Initialize Projects</span>
                         </div>
-                        <div>
-                            <h2 class="font-display font-bold text-2xl md:text-4xl text-moon-void">Project Archives</h2>
-                            <p class="text-xs md:text-sm font-bold uppercase tracking-widest text-gray-400 mt-2">Click to open classified files</p>
-                        </div>
-                    </div>
-                    <div class="folder-icon text-purple-300 text-3xl">
                         <i class="fa-solid fa-chevron-right"></i>
                     </div>
                 </div>
 
-                <div class="folder-content grid gap-10">
-                    <!-- Project 1: Wow Woolies (Premium) -->
-                    <div class="tilt-card project-card p-0 overflow-hidden border border-purple-200 group bg-white shadow-2xl">
-                        <div class="absolute inset-0 bg-gradient-to-r from-[#0B0A1F] to-[#2D1B4E] opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-0"></div>
-                        <div class="tilt-content relative z-10 p-10 md:p-14 flex flex-col md:flex-row justify-between items-center gap-10">
-                            <div class="flex-1 group-hover:text-white transition-colors duration-500">
-                                <div class="flex items-center gap-3 mb-6">
-                                    <span class="w-3 h-3 rounded-full bg-green-500 animate-pulse box-shadow-glow"></span>
-                                    <span class="text-xs font-bold uppercase tracking-widest text-purple-600 group-hover:text-purple-300">Live Production</span>
+                <!-- The Projects Grid (Horizontally Popped) -->
+                <div id="projectsGrid" class="projects-grid">
+                    
+                    <!-- Card 1: Wow Woolies (Premium with Live Mockup) -->
+                    <div class="tilt-card pop-card p-0 overflow-hidden border border-purple-400 bg-white shadow-2xl h-full min-h-[420px] group cursor-default">
+                        <div class="absolute inset-0 bg-gradient-to-br from-[#0B0A1F] to-[#2D1B4E] opacity-100 z-0"></div>
+                         <div class="tilt-content relative z-10 p-8 text-white flex flex-col h-full justify-between">
+                             <div>
+                                <div class="flex items-center gap-2 mb-4">
+                                    <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+                                    <span class="text-[10px] font-bold uppercase tracking-widest text-purple-200">Live Production</span>
                                 </div>
-                                <h3 class="font-display font-bold text-5xl mb-6 tracking-tight">Wow Woolies</h3>
-                                <p class="text-gray-600 group-hover:text-gray-300 mb-8 text-xl font-light leading-relaxed">
-                                    A live e-commerce platform. I architected the MongoDB database, optimizing query speeds by 20% and ensuring secure payment data handling for the MOON startup ecosystem.
+                                <h3 class="font-display font-bold text-4xl mb-4">Wow Woolies</h3>
+                                
+                                <!-- SKILLS LISTED -->
+                                <div class="flex flex-wrap gap-2 mb-6">
+                                    <span class="px-2 py-1 bg-white/10 border border-white/20 rounded text-[10px] font-bold uppercase tracking-wider">MongoDB</span>
+                                    <span class="px-2 py-1 bg-white/10 border border-white/20 rounded text-[10px] font-bold uppercase tracking-wider">Express.js</span>
+                                    <span class="px-2 py-1 bg-white/10 border border-white/20 rounded text-[10px] font-bold uppercase tracking-wider">E-Commerce</span>
+                                </div>
+
+                                <p class="text-gray-300 text-sm leading-relaxed mb-6 max-w-[70%]">
+                                    Architected MongoDB schema for a live fashion brand. Optimized query speeds by 20%.
                                 </p>
-                                <a href="https://wowwoolies.co.in" target="_blank" class="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-purple-600 text-white font-bold tracking-widest text-xs hover:bg-white hover:text-purple-900 transition-all shadow-lg hover:shadow-purple-500/50">
-                                    VISIT WEBSITE <i class="fa-solid fa-arrow-right -rotate-45"></i>
-                                </a>
+                             </div>
+                            <a href="https://wowwoolies.co.in" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-purple-500 text-white font-bold tracking-widest text-[10px] hover:bg-white hover:text-purple-900 transition-all shadow-lg hover:shadow-purple-500/50 w-fit">
+                                VISIT SITE <i class="fa-solid fa-arrow-right -rotate-45"></i>
+                            </a>
+                        </div>
+
+                        <!-- WORKING LIVE PREVIEW (Mockup) -->
+                        <div class="browser-mockup">
+                            <div class="browser-header">
+                                <div class="browser-dot bg-red-300"></div>
+                                <div class="browser-dot bg-yellow-300"></div>
+                                <div class="browser-dot bg-green-300"></div>
                             </div>
-                            <div class="w-40 h-40 rounded-full bg-purple-50 border border-purple-100 group-hover:bg-white/10 group-hover:border-white/20 flex items-center justify-center transition-all shadow-inner transform group-hover:rotate-12 duration-700">
-                                <i class="fa-solid fa-moon text-6xl text-purple-400 group-hover:text-white drop-shadow-lg"></i>
-                            </div>
+                            <div class="browser-content"></div>
                         </div>
                     </div>
 
-                    <!-- Project 2: Wanderlust -->
-                    <div class="tilt-card project-card p-10 flex flex-col md:flex-row justify-between items-center gap-8">
-                        <div class="tilt-content flex-1">
-                            <h3 class="font-display font-bold text-3xl text-moon-void mb-3">Wanderlust</h3>
-                            <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Travel Booking Engine</p>
-                            <p class="text-gray-600 mb-6 text-lg">
-                                Full-stack MVC application. Integrated Mapbox for geolocation and Cloudinary for media storage. Implemented secure user authentication via Passport.js.
-                            </p>
-                            <div class="flex gap-3">
-                                <span class="text-[10px] font-bold px-3 py-1 bg-white border rounded-md text-gray-500 shadow-sm">Express</span>
-                                <span class="text-[10px] font-bold px-3 py-1 bg-white border rounded-md text-gray-500 shadow-sm">Mapbox</span>
+                    <!-- Card 2: Wanderlust -->
+                    <div class="tilt-card pop-card p-8 border-l-4 border-l-blue-400 flex flex-col h-full justify-between bg-white/80 hover:bg-white transition-colors">
+                         <div class="tilt-content w-full">
+                            <div class="flex justify-between w-full mb-4">
+                                <h3 class="font-display font-bold text-3xl text-moon-void">Wanderlust</h3>
+                                <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-500 text-lg">
+                                    <i class="fa-solid fa-plane-up"></i>
+                                </div>
                             </div>
+                            
+                            <!-- SKILLS -->
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="px-2 py-1 bg-blue-50 border border-blue-100 rounded text-[10px] font-bold uppercase tracking-wide text-blue-600">Node.js</span>
+                                <span class="px-2 py-1 bg-blue-50 border border-blue-100 rounded text-[10px] font-bold uppercase tracking-wide text-blue-600">Mapbox</span>
+                                <span class="px-2 py-1 bg-blue-50 border border-blue-100 rounded text-[10px] font-bold uppercase tracking-wide text-blue-600">MVC</span>
+                            </div>
+
+                            <p class="text-sm text-gray-600 mb-6 leading-relaxed">Full-stack booking engine. Integrated geolocation and media storage.</p>
                         </div>
-                        <a href="https://github.com/mishra2004nidhi" target="_blank" class="tilt-content w-16 h-16 rounded-full border border-gray-300 flex items-center justify-center hover:bg-black hover:text-white transition-colors shadow-lg">
-                            <i class="fa-brands fa-github text-2xl"></i>
-                        </a>
+                        <div class="tilt-content flex justify-between items-center">
+                            <a href="https://github.com/mishra2004nidhi" target="_blank" class="text-xs font-bold uppercase tracking-widest border-b border-gray-300 hover:border-blue-500 hover:text-blue-600 transition-colors">Source Code</a>
+                            <a href="https://github.com/mishra2004nidhi" target="_blank" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-black hover:text-white transition-colors">
+                                <i class="fa-brands fa-github"></i>
+                            </a>
+                        </div>
                     </div>
 
-                    <!-- Project 3: Simon Game -->
-                    <div class="tilt-card project-card p-10 flex flex-col md:flex-row justify-between items-center gap-8">
-                        <div class="tilt-content flex-1">
-                            <h3 class="font-display font-bold text-3xl text-moon-void mb-3">Simon Game</h3>
-                            <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Interactive Logic</p>
-                            <p class="text-gray-600 mb-6 text-lg">
-                                A dynamic browser-based memory game. Showcases complex DOM manipulation, event handling, and game state logic in pure JavaScript.
-                            </p>
-                            <div class="flex gap-3">
-                                <span class="text-[10px] font-bold px-3 py-1 bg-white border rounded-md text-gray-500 shadow-sm">JavaScript</span>
-                                <span class="text-[10px] font-bold px-3 py-1 bg-white border rounded-md text-gray-500 shadow-sm">CSS Animation</span>
+                    <!-- Card 3: Simon Game -->
+                    <div class="tilt-card pop-card p-8 border-l-4 border-l-yellow-400 flex flex-col h-full justify-between bg-white/80 hover:bg-white transition-colors">
+                         <div class="tilt-content w-full">
+                            <div class="flex justify-between w-full mb-4">
+                                <h3 class="font-display font-bold text-3xl text-moon-void">Simon Game</h3>
+                                <div class="w-10 h-10 rounded-full bg-yellow-50 flex items-center justify-center text-yellow-500 text-lg">
+                                    <i class="fa-solid fa-gamepad"></i>
+                                </div>
                             </div>
+
+                            <!-- SKILLS -->
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="px-2 py-1 bg-yellow-50 border border-yellow-100 rounded text-[10px] font-bold uppercase tracking-wide text-yellow-600">JavaScript</span>
+                                <span class="px-2 py-1 bg-yellow-50 border border-yellow-100 rounded text-[10px] font-bold uppercase tracking-wide text-yellow-600">DOM</span>
+                                <span class="px-2 py-1 bg-yellow-50 border border-yellow-100 rounded text-[10px] font-bold uppercase tracking-wide text-yellow-600">Logic</span>
+                            </div>
+
+                            <p class="text-sm text-gray-600 mb-6 leading-relaxed">Interactive logic game with complex state management.</p>
                         </div>
-                        <a href="https://github.com/mishra2004nidhi" target="_blank" class="tilt-content w-16 h-16 rounded-full border border-gray-300 flex items-center justify-center hover:bg-black hover:text-white transition-colors shadow-lg">
-                            <i class="fa-brands fa-github text-2xl"></i>
-                        </a>
+                         <div class="tilt-content flex justify-between items-center">
+                            <a href="https://github.com/mishra2004nidhi" target="_blank" class="text-xs font-bold uppercase tracking-widest border-b border-gray-300 hover:border-yellow-500 hover:text-yellow-600 transition-colors">Play Demo</a>
+                            <a href="https://github.com/mishra2004nidhi" target="_blank" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-black hover:text-white transition-colors">
+                                <i class="fa-brands fa-github"></i>
+                            </a>
+                        </div>
                     </div>
+
                 </div>
             </div>
         </section>
@@ -471,32 +484,22 @@
                     const centerY = rect.height / 2;
                     const rotateX = ((y - centerY) / centerY) * -5;
                     const rotateY = ((x - centerX) / centerX) * 5;
-                    card.style.setProperty('--mouse-x', `${x}px`);
-                    card.style.setProperty('--mouse-y', `${y}px`);
                     card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
                 });
                 card.addEventListener('mouseleave', () => {
                     card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
                     card.style.transition = 'transform 0.5s ease';
                 });
-                card.addEventListener('mouseenter', () => {
-                    card.style.transition = 'none';
-                });
             });
         });
 
-        // Folder Toggle
-        function toggleFolder() {
-            const folder = document.getElementById('projectFolder');
-            const icon = folder.querySelector('.folder-icon i');
-            folder.classList.toggle('open');
-            if (folder.classList.contains('open')) {
-                icon.classList.remove('fa-chevron-right');
-                icon.classList.add('fa-chevron-down');
-            } else {
-                icon.classList.remove('fa-chevron-down');
-                icon.classList.add('fa-chevron-right');
-            }
+        // Activate Projects Grid
+        function activateProjects() {
+            const trigger = document.getElementById('launchPad');
+            const grid = document.getElementById('projectsGrid');
+            
+            trigger.classList.add('deployed');
+            grid.classList.add('active');
         }
     </script>
 </body>
