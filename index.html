@@ -3,47 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nidhi Mishra | Database Developer</title>
+    <title>Nidhi Mishra | Portfolio</title>
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter for UI, Playfair Display for Premium Headings -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     
+    <!-- Phosphor Icons (Clean, modern icons) -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-                        heading: ['"Outfit"', 'sans-serif'],
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
                     },
                     colors: {
-                        moon: {
-                            base: '#FFFFFF',
-                            lavender: '#E6E6FA',
-                            purple: '#805AD5',
-                            text: '#2D3748',
-                        }
+                        'premium-gold': '#C8A359',
+                        'premium-dark': '#050505',
+                        'glass-border': 'rgba(255, 255, 255, 0.15)',
                     },
                     animation: {
+                        'fade-in-up': 'fadeInUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'fade-in': 'fadeIn 1.5s ease-out forwards',
                         'float': 'float 6s ease-in-out infinite',
-                        'float-delayed': 'float 6s ease-in-out 3s infinite',
-                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
-                        'shimmer': 'shimmer 2s linear infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'spin-slow': 'spin 8s linear infinite',
+                        'spin-reverse-slow': 'spin-reverse 10s linear infinite',
                     },
                     keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-20px)' },
-                        },
                         fadeInUp: {
-                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '0%': { opacity: '0', transform: 'translateY(40px)' },
                             '100%': { opacity: '1', transform: 'translateY(0)' },
                         },
-                        shimmer: {
-                            '0%': { backgroundPosition: '-200% 0' },
-                            '100%': { backgroundPosition: '200% 0' },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        'spin-reverse': {
+                            'from': { transform: 'rotate(360deg)' },
+                            'to': { transform: 'rotate(0deg)' }
                         }
                     }
                 }
@@ -52,425 +61,927 @@
     </script>
 
     <style>
-        /* Simple Glass Effect */
-        .glass {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
-        }
-        
-        .glass-card {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
 
-        /* Premium Glow Hover */
-        .glass-card:hover {
-            transform: translateY(-8px);
-            background: rgba(255, 255, 255, 0.95);
-            border-color: rgba(216, 180, 254, 0.5);
+        /* The Premium Glass Effect - Dark (Hero) */
+        .glass-panel {
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(24px) saturate(180%);
+            -webkit-backdrop-filter: blur(24px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 
-                0 20px 40px -5px rgba(128, 90, 213, 0.15),
-                0 0 20px rgba(216, 180, 254, 0.4); /* Lavender Glow */
+                0 40px 80px -12px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.3);
         }
 
-        /* Button Shimmer Effect */
-        .btn-shimmer {
-            background: linear-gradient(90deg, #0F172A 0%, #334155 50%, #0F172A 100%);
-            background-size: 200% 100%;
-            animation: shimmer 3s infinite linear;
+        /* Light Glass Panel for White Sections */
+        .glass-panel-light {
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 
+                0 20px 40px -10px rgba(0, 0, 0, 0.05), 
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            transform-style: preserve-3d; 
         }
 
-        /* Background Blobs */
-        .blob {
-            position: absolute;
-            filter: blur(80px);
-            z-index: -1;
-            opacity: 0.6;
-            animation: float 10s infinite ease-in-out;
-        }
-
-        /* Gradient Text */
-        .text-gradient {
-            background: linear-gradient(135deg, #2D3748 0%, #805AD5 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        /* Modal Backdrop */
+        .modal-backdrop {
+            background: rgba(10, 10, 10, 0.65);
+            backdrop-filter: blur(16px) saturate(120%);
+            -webkit-backdrop-filter: blur(16px) saturate(120%);
         }
         
-        /* Interactive Skill Card */
-        .skill-card {
-            cursor: pointer;
-            transition: all 0.3s ease;
+        /* Modal Card */
+        .glass-modal-card {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 50px 100px -20px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,1);
         }
-        .skill-card:hover {
-            transform: scale(1.05);
-            background-color: #F3E8FF; /* Light Purple */
-            border-color: #D8B4FE;
+
+        /* Hover State */
+        .glass-btn {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .skill-card:hover i {
-            transform: rotate(10deg) scale(1.2);
-            transition: transform 0.3s ease;
+        .glass-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -5px rgba(0,0,0,0.3);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Ambient Background Glows */
+        .ambient-glow-gold {
+            background: radial-gradient(circle, rgba(200, 163, 89, 0.15) 0%, rgba(0,0,0,0) 70%);
+        }
+        .ambient-glow-blue {
+            background: radial-gradient(circle, rgba(30, 58, 138, 0.2) 0%, rgba(0,0,0,0) 70%);
+        }
+        
+        /* Tooltip styling */
+        .tooltip {
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.2s, transform 0.2s;
+            transform: translateY(10px) translateX(-50%);
+        }
+        .group:hover .tooltip {
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(0) translateX(-50%);
+        }
+
+        /* Reveal on Scroll Class */
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal-on-scroll.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Horizontal Scroll Hide Scrollbar */
+        .hide-scroll::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scroll {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            scroll-behavior: smooth; 
+        }
+
+        /* 3D Perspective Container */
+        .perspective-container {
+            perspective: 1200px;
+            overflow: visible;
+        }
+        
+        .coverflow-item {
+            backface-visibility: hidden;
+            will-change: transform, opacity, filter;
+        }
+
+        /* 3D Tilt Effect */
+        .tilt-card {
+            transform-style: preserve-3d;
+            transform: perspective(1000px);
         }
     </style>
 </head>
-<body class="bg-slate-50 text-gray-700 font-sans selection:bg-purple-200 selection:text-purple-900 overflow-x-hidden">
+<body class="bg-premium-dark text-white selection:bg-premium-gold selection:text-black overflow-x-hidden">
 
-    <!-- Background Elements -->
-    <div class="fixed inset-0 overflow-hidden pointer-events-none">
-        <div class="blob bg-purple-200 w-96 h-96 rounded-full top-0 left-[-100px] mix-blend-multiply"></div>
-        <div class="blob bg-pink-200 w-96 h-96 rounded-full top-[30%] right-[-100px] mix-blend-multiply animation-delay-2000"></div>
-        <div class="blob bg-blue-100 w-80 h-80 rounded-full bottom-[-50px] left-[20%] mix-blend-multiply animation-delay-4000"></div>
-    </div>
+    <!-- Fixed Background Noise Texture -->
+    <div class="fixed inset-0 opacity-[0.03] pointer-events-none z-50" style="background-image: url('https://grainy-gradients.vercel.app/noise.svg');"></div>
 
-    <!-- Navigation -->
-    <nav class="fixed w-full z-50 top-0 transition-all duration-300" id="navbar">
-        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="text-2xl font-heading font-bold text-slate-800 flex items-center gap-2">
-                <span class="w-3 h-3 rounded-full bg-purple-500"></span>
-                Nidhi<span class="text-purple-600">.</span>
-            </a>
-            
-            <div class="hidden md:flex space-x-8 items-center text-sm font-medium text-slate-600">
-                <a href="#about" class="hover:text-purple-600 transition-colors">About</a>
-                <a href="#experience" class="hover:text-purple-600 transition-colors">Experience</a>
-                <a href="#projects" class="hover:text-purple-600 transition-colors">Projects</a>
-                <a href="#skills" class="hover:text-purple-600 transition-colors">Skills</a>
-                <a href="#contact" class="px-5 py-2 rounded-full bg-slate-900 text-white hover:bg-purple-600 transition-all shadow-lg shadow-purple-200">Contact</a>
-            </div>
+    <!-- ================= HERO SECTION ================= -->
+    <main id="hero-container" class="relative w-full h-screen flex flex-col items-center justify-end pb-12 md:pb-16 overflow-hidden">
+        <!-- BACKGROUND LAYERS -->
+        <div class="absolute top-0 right-0 w-[800px] h-[800px] ambient-glow-gold opacity-60 pointer-events-none animate-pulse" style="animation-duration: 4s;"></div>
+        <div class="absolute bottom-0 left-0 w-[1000px] h-[800px] ambient-glow-blue opacity-50 pointer-events-none"></div>
+
+        <!-- Hero Image -->
+        <div id="parallax-bg" class="absolute inset-0 z-0 flex items-center justify-center transition-transform duration-100 ease-out scale-105">
+            <!-- Placeholder for Nidhi's Image -->
+            <img 
+                src="nidhi-image.png" 
+                alt="Nidhi Mishra" 
+                class="h-full w-full object-cover object-top opacity-0 animate-fade-in"
+                onload="this.classList.remove('opacity-0')"
+                onerror="this.src='https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=2788&auto=format&fit=crop'; this.style.filter='brightness(0.6) contrast(1.1)';"
+            >
+            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
         </div>
-    </nav>
 
-    <!-- Hero Section -->
-    <section class="min-h-screen flex items-center justify-center pt-20" id="about">
-        <div class="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
-            <!-- Text -->
-            <div class="order-2 md:order-1 space-y-6 animate-fade-in-up">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-purple-100 text-purple-700 text-xs font-bold uppercase shadow-sm">
-                    <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-                    Available for Hire
-                </div>
-                
-                <h1 class="text-5xl md:text-7xl font-heading font-bold leading-tight text-slate-900">
-                    Designing Logic <br>
-                    <span class="text-gradient">Beyond Clouds.</span>
-                </h1>
-                
-                <p class="text-lg text-slate-600 max-w-lg leading-relaxed">
-                    I am <span class="font-bold text-slate-800">Nidhi Mishra</span>, a Computer Science undergraduate from <strong>Government Women's Engineering College, Ajmer</strong>. I specialize in backend development, API workflows, and building scalable systems within startup ecosystems.
-                </p>
+        <!-- FOREGROUND CONTENT -->
+        <div class="absolute top-24 z-10 text-center opacity-0 animate-fade-in-up" style="animation-delay: 0.5s;">
+            <p class="text-premium-gold tracking-[0.3em] text-xs uppercase mb-2 font-medium">Portfolio</p>
+            <h1 class="font-serif text-5xl md:text-7xl font-bold tracking-tight text-white drop-shadow-2xl">
+                Nidhi<br/>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400">Mishra</span>
+            </h1>
+            <p class="mt-4 text-gray-300 font-light tracking-wide">Backend & Database Developer</p>
+        </div>
 
-                <div class="flex flex-wrap gap-4 pt-4">
-                    <a href="#projects" class="btn-shimmer px-8 py-3 bg-slate-900 text-white rounded-full font-medium hover:shadow-lg hover:shadow-purple-300 transition-all transform hover:-translate-y-1">
-                        View Work
-                    </a>
-                    <a href="https://github.com/nidhi829n" target="_blank" class="px-8 py-3 bg-white border border-slate-200 text-slate-700 rounded-full font-medium hover:border-purple-300 hover:text-purple-600 hover:shadow-md transition-all transform hover:-translate-y-1 flex items-center gap-2">
-                        <i class="fa-brands fa-github"></i> GitHub
-                    </a>
-                    <!-- Added LinkedIn Button Here -->
-                    <a href="https://www.linkedin.com/in/nidhi-mishra-512327243/" target="_blank" class="px-8 py-3 bg-white border border-slate-200 text-slate-700 rounded-full font-medium hover:border-blue-400 hover:text-blue-600 hover:shadow-md transition-all transform hover:-translate-y-1 flex items-center gap-2">
-                        <i class="fa-brands fa-linkedin"></i> LinkedIn
-                    </a>
-                </div>
-            </div>
-
-            <!-- Image -->
-            <div class="order-1 md:order-2 flex justify-center relative animate-fade-in-up" style="animation-delay: 0.2s;">
-                <div class="relative w-72 h-72 md:w-96 md:h-96">
-                    <div class="absolute inset-0 bg-gradient-to-tr from-purple-200 to-pink-200 rounded-full mix-blend-multiply filter blur-2xl opacity-70 animate-float"></div>
-                    <div class="absolute inset-0 bg-gradient-to-tr from-blue-200 to-white rounded-full mix-blend-multiply filter blur-2xl opacity-70 animate-float-delayed ml-4 mt-4"></div>
-                    
-                    <!-- Photo Container with Glow -->
-                    <div class="relative w-full h-full rounded-full overflow-hidden border-[6px] border-white shadow-[0_0_40px_rgba(128,90,213,0.2)]">
-                        <img src="Nidhi_image.jpg" onerror="this.src='https://ui-avatars.com/api/?name=Nidhi+Mishra&background=random&size=512'" alt="Nidhi Mishra" class="w-full h-full object-cover">
+        <!-- Glass Dock -->
+        <div class="relative z-20 w-[90%] max-w-2xl opacity-0 animate-fade-in-up" style="animation-delay: 1.2s;">
+            <div class="glass-panel rounded-full p-2 md:p-3 flex items-center justify-between backdrop-blur-xl">
+                <div class="flex items-center gap-2">
+                    <div class="group relative">
+                        <button onclick="copyToClipboard('mishra2004nidhi@gmail.com', 'email-tooltip')" class="glass-btn w-12 h-12 rounded-full flex items-center justify-center text-gray-300 hover:text-white">
+                            <i class="ph ph-envelope-simple text-xl"></i>
+                        </button>
+                        <span id="email-tooltip" class="tooltip absolute bottom-full left-1/2 mb-3 px-3 py-1 text-xs text-black bg-white rounded shadow-lg whitespace-nowrap">Copy Email</span>
+                    </div>
+                    <div class="group relative">
+                        <button onclick="copyToClipboard('+916378569197', 'phone-tooltip')" class="glass-btn w-12 h-12 rounded-full flex items-center justify-center text-gray-300 hover:text-white">
+                            <i class="ph ph-phone text-xl"></i>
+                        </button>
+                        <span id="phone-tooltip" class="tooltip absolute bottom-full left-1/2 mb-3 px-3 py-1 text-xs text-black bg-white rounded shadow-lg whitespace-nowrap">Copy Phone</span>
                     </div>
                 </div>
+
+                <div class="h-6 w-px bg-white/10 mx-2 hidden sm:block"></div>
+                <div class="hidden sm:block text-xs text-gray-400 font-light tracking-widest uppercase">Connect With Me</div>
+                <div class="h-6 w-px bg-white/10 mx-2 hidden sm:block"></div>
+
+                <div class="flex items-center gap-2">
+                    <a href="https://www.linkedin.com/in/nidhi-mishra-512327243/" target="_blank" class="group relative">
+                        <div class="glass-btn w-12 h-12 rounded-full flex items-center justify-center text-blue-400 hover:text-blue-300 hover:bg-blue-500/20">
+                            <i class="ph ph-linkedin-logo text-xl"></i>
+                        </div>
+                    </a>
+                    <a href="https://github.com/nidhi829n" target="_blank" class="group relative">
+                        <div class="glass-btn w-12 h-12 rounded-full flex items-center justify-center text-gray-300 hover:text-white hover:bg-gray-500/20">
+                            <i class="ph ph-github-logo text-xl"></i>
+                        </div>
+                    </a>
+                    <a href="#about" class="ml-2">
+                        <div class="w-12 h-12 rounded-full bg-white text-black flex items-center justify-center hover:scale-110 transition-transform duration-300 shadow-[0_0_20px_rgba(255,255,255,0.3)]">
+                            <i class="ph ph-arrow-down text-xl animate-bounce"></i>
+                        </div>
+                    </a>
+                </div>
             </div>
+            <div class="absolute -bottom-10 left-1/2 -translate-x-1/2 w-3/4 h-20 bg-premium-gold/20 blur-[50px] pointer-events-none rounded-full"></div>
         </div>
-    </section>
+    </main>
 
-    <!-- Experience Section -->
-    <section id="experience" class="py-20">
-        <div class="container mx-auto px-6">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-12">
-                <div>
-                    <h2 class="text-purple-600 font-bold text-sm uppercase tracking-wide mb-2">My Journey</h2>
-                    <h3 class="text-3xl md:text-4xl font-heading font-bold text-slate-900">Experience</h3>
-                </div>
+    <!-- ================= ABOUT / SUMMARY SECTION ================= -->
+    <section id="about" class="relative w-full min-h-[60vh] flex items-center justify-center py-20 bg-white">
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-premium-gold/5 blur-[100px] rounded-full pointer-events-none"></div>
+
+        <div class="container mx-auto px-6 md:px-12 relative z-10">
+            <div class="text-center mb-12 reveal-on-scroll">
+                <span class="text-premium-gold tracking-[0.2em] text-xs uppercase font-medium">About Me</span>
+                <h2 class="font-serif text-4xl md:text-5xl font-bold mt-4 text-gray-900">Professional Summary</h2>
             </div>
 
-            <div class="glass-card p-10 rounded-3xl border-l-4 border-purple-500 relative group">
-                <div class="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity duration-500">
-                    <i class="fa-solid fa-briefcase text-8xl text-purple-900"></i>
-                </div>
-                
-                <div class="flex flex-col md:flex-row gap-8 relative z-10">
-                    <div class="md:w-1/4">
-                        <span class="text-6xl font-heading font-bold text-purple-100 group-hover:text-purple-200 transition-colors">01</span>
-                        <div class="mt-2">
-                            <p class="font-bold text-slate-800 text-lg">Sept 2025 - Oct 2025</p>
-                            <p class="text-sm text-slate-500">Database Developer</p>
+            <div class="glass-panel-light p-8 md:p-12 rounded-3xl max-w-4xl mx-auto reveal-on-scroll">
+                <div class="flex flex-col md:flex-row gap-8 items-center md:items-start">
+                    <div class="flex-shrink-0 w-16 h-16 rounded-full bg-gradient-to-br from-premium-gold to-yellow-600 flex items-center justify-center shadow-lg shadow-orange-500/20">
+                        <i class="ph-fill ph-code text-2xl text-white"></i>
+                    </div>
+                    <div class="flex-1 text-center md:text-left">
+                        <p class="text-lg md:text-xl leading-relaxed text-gray-600 font-light">
+                            <span class="text-gray-900 font-medium">Computer Science Undergraduate</span> with hands-on experience in backend development and database management. 
+                            Skilled in <span class="text-premium-gold font-semibold">MongoDB, Node.js, and API workflows</span>, I specialize in building functional components for real-world web applications.
+                            Contributed to a live e-commerce platform within the <span class="text-gray-900 font-medium">MOON startup environment</span>, ensuring scalable and clean code solutions.
+                        </p>
+                        <div class="mt-8 pt-8 border-t border-black/10 flex flex-col md:flex-row items-center justify-between gap-4">
+                            <div class="flex items-center gap-4 justify-center md:justify-start flex-wrap">
+                                <div class="px-4 py-1.5 rounded-full border border-black/10 bg-black/5 text-xs tracking-wider uppercase text-gray-600">Backend Dev</div>
+                                <div class="px-4 py-1.5 rounded-full border border-black/10 bg-black/5 text-xs tracking-wider uppercase text-gray-600">Database Mgmt</div>
+                                <div class="px-4 py-1.5 rounded-full border border-black/10 bg-black/5 text-xs tracking-wider uppercase text-gray-600">API Design</div>
+                            </div>
+                            <div class="font-serif italic text-gray-400">Nidhi Mishra</div>
                         </div>
                     </div>
-                   <div class="md:w-3/4">
-                    <h4 class="text-2xl font-bold text-slate-800">Wow Woolies</h4>
-                    <div class="flex items-center gap-2 mb-4 mt-1">
-                    <a href="http://moonnow.in/" target="_blank" class="text-purple-600 font-medium hover:underline">
-                    MOON
-                    </a>
-                    <span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
-                    <span class="text-slate-500">Ajmer, Rajasthan</span>
-                    </div>
-                </div>
-
-                        <ul class="text-slate-600 leading-relaxed text-lg list-disc pl-5 space-y-2">
-                            <li><strong>Scalable Database Work:</strong> Built and supported a production-grade, scalable MongoDB setup.</li>
-                            <li><strong>Performance Tuning:</strong> Improved MongoDB query speed, reliability, and data efficiency.</li>
-                            <li><strong>Startup Deployment Exposure:</strong> Worked on backend components in a live startup environment.</li>
-                            <li><strong>Cross-Team Collaboration:</strong> Coordinated with backend teams for seamless API-database communication.</li>
-                        </ul>
-                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Projects Section -->
-    <section id="projects" class="py-20 bg-white/50">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="text-purple-600 font-bold text-sm uppercase tracking-wide mb-2">Portfolio</h2>
-                <h3 class="text-3xl md:text-4xl font-heading font-bold text-slate-900">Featured Projects</h3>
+    <!-- ================= TECHNICAL SKILLS SECTION ================= -->
+    <section id="skills" class="relative w-full py-24 bg-gray-50 overflow-hidden">
+        <div class="absolute -top-20 -right-20 w-[500px] h-[500px] bg-blue-100 blur-[100px] rounded-full opacity-60 pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-amber-50 blur-[80px] rounded-full opacity-60 pointer-events-none"></div>
+
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center mb-20 reveal-on-scroll">
+                <span class="text-premium-gold tracking-[0.2em] text-xs uppercase font-medium">Expertise</span>
+                <h2 class="font-serif text-4xl md:text-5xl font-bold mt-4 text-gray-900">Technical Skills</h2>
+                <p class="mt-4 text-gray-500 font-light">Click on cards to view detailed skills</p>
             </div>
 
-            <div class="grid md:grid-cols-3 gap-8">
-                
-                <!-- Project 1 -->
-                <div class="glass-card rounded-3xl overflow-hidden flex flex-col group cursor-pointer">
-                    <div class="h-56 bg-purple-50 flex items-center justify-center relative overflow-hidden group-hover:bg-purple-100 transition-colors duration-500">
-                        <div class="absolute inset-0 bg-gradient-to-br from-purple-100 to-white opacity-50"></div>
-                        <i class="fa-solid fa-bag-shopping text-6xl text-purple-300 group-hover:scale-110 group-hover:text-purple-400 transition-all duration-500"></i>
+            <div class="w-full max-w-6xl mx-auto">
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    
+                    <!-- Languages -->
+                    <button onclick="openModal('skill-languages')" class="glass-panel-light rounded-3xl flex flex-col items-center justify-center p-8 cursor-pointer relative transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:border-premium-gold/50 group h-64 w-full">
+                        <div class="w-20 h-20 rounded-2xl bg-orange-100 flex items-center justify-center text-orange-600 shadow-sm mb-4 group-hover:scale-110 transition-transform duration-300">
+                            <i class="ph-fill ph-code text-5xl"></i>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-gray-800 text-center group-hover:text-premium-gold transition-colors">Languages</h3>
+                        <p class="text-gray-400 text-xs mt-2 font-medium uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity">View Details</p>
+                    </button>
+
+                    <!-- Backend -->
+                    <button onclick="openModal('skill-backend')" class="glass-panel-light rounded-3xl flex flex-col items-center justify-center p-8 cursor-pointer relative transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:border-premium-gold/50 group h-64 w-full">
+                        <div class="w-20 h-20 rounded-2xl bg-green-100 flex items-center justify-center text-green-600 shadow-sm mb-4 group-hover:scale-110 transition-transform duration-300">
+                            <i class="ph-fill ph-server text-5xl"></i>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-gray-800 text-center group-hover:text-premium-gold transition-colors">Backend</h3>
+                        <p class="text-gray-400 text-xs mt-2 font-medium uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity">View Details</p>
+                    </button>
+
+                    <!-- Databases -->
+                    <button onclick="openModal('skill-db')" class="glass-panel-light rounded-3xl flex flex-col items-center justify-center p-8 cursor-pointer relative transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:border-premium-gold/50 group h-64 w-full">
+                        <div class="w-20 h-20 rounded-2xl bg-yellow-100 flex items-center justify-center text-yellow-600 shadow-sm mb-4 group-hover:scale-110 transition-transform duration-300">
+                            <i class="ph-fill ph-database text-5xl"></i>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-gray-800 text-center group-hover:text-premium-gold transition-colors">Databases</h3>
+                        <p class="text-gray-400 text-xs mt-2 font-medium uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity">View Details</p>
+                    </button>
+
+                    <!-- Frontend -->
+                    <button onclick="openModal('skill-frontend')" class="glass-panel-light rounded-3xl flex flex-col items-center justify-center p-8 cursor-pointer relative transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:border-premium-gold/50 group h-64 w-full">
+                        <div class="w-20 h-20 rounded-2xl bg-purple-100 flex items-center justify-center text-purple-600 shadow-sm mb-4 group-hover:scale-110 transition-transform duration-300">
+                            <i class="ph-fill ph-browser text-5xl"></i>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-gray-800 text-center group-hover:text-premium-gold transition-colors">Frontend</h3>
+                        <p class="text-gray-400 text-xs mt-2 font-medium uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity">View Details</p>
+                    </button>
+
+                    <!-- Tools -->
+                    <button onclick="openModal('skill-tools')" class="glass-panel-light rounded-3xl flex flex-col items-center justify-center p-8 cursor-pointer relative transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:border-premium-gold/50 group h-64 w-full">
+                        <div class="w-20 h-20 rounded-2xl bg-gray-100 flex items-center justify-center text-gray-600 shadow-sm mb-4 group-hover:scale-110 transition-transform duration-300">
+                            <i class="ph-fill ph-toolbox text-5xl"></i>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-gray-800 text-center group-hover:text-premium-gold transition-colors">Tools</h3>
+                        <p class="text-gray-400 text-xs mt-2 font-medium uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity">View Details</p>
+                    </button>
+
+                    <!-- Core Skills -->
+                    <button onclick="openModal('skill-core')" class="glass-panel-light rounded-3xl flex flex-col items-center justify-center p-8 cursor-pointer relative transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:border-premium-gold/50 group h-64 w-full">
+                        <div class="w-20 h-20 rounded-2xl bg-blue-100 flex items-center justify-center text-blue-600 shadow-sm mb-4 group-hover:scale-110 transition-transform duration-300">
+                            <i class="ph-fill ph-gear text-5xl"></i>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-gray-800 text-center group-hover:text-premium-gold transition-colors">Core Skills</h3>
+                        <p class="text-gray-400 text-xs mt-2 font-medium uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity">View Details</p>
+                    </button>
+
+                    <!-- Soft Skills -->
+                    <button onclick="openModal('skill-soft')" class="glass-panel-light rounded-3xl flex flex-col items-center justify-center p-8 cursor-pointer relative transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:border-premium-gold/50 group h-64 w-full">
+                        <div class="w-20 h-20 rounded-2xl bg-teal-100 flex items-center justify-center text-teal-600 shadow-sm mb-4 group-hover:scale-110 transition-transform duration-300">
+                            <i class="ph-fill ph-users text-5xl"></i>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-gray-800 text-center group-hover:text-premium-gold transition-colors">Soft Skills</h3>
+                        <p class="text-gray-400 text-xs mt-2 font-medium uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity">View Details</p>
+                    </button>
+
+                     <!-- Certifications -->
+                     <button onclick="openModal('skill-certifications')" class="glass-panel-light rounded-3xl flex flex-col items-center justify-center p-8 cursor-pointer relative transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:border-premium-gold/50 group h-64 w-full">
+                        <div class="w-20 h-20 rounded-2xl bg-red-100 flex items-center justify-center text-red-600 shadow-sm mb-4 group-hover:scale-110 transition-transform duration-300">
+                            <i class="ph-fill ph-certificate text-5xl"></i>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-gray-800 text-center group-hover:text-premium-gold transition-colors">Certifications</h3>
+                        <p class="text-gray-400 text-xs mt-2 font-medium uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity">View Details</p>
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= EXPERIENCE SECTION (RENAMED FROM INTERNSHIP) ================= -->
+    <section id="experience" class="relative w-full py-24 bg-white overflow-hidden border-t border-gray-100">
+        <!-- Decoration -->
+        <div class="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_10%_20%,_rgba(200,163,89,0.05),_transparent)] pointer-events-none"></div>
+
+        <div class="container mx-auto px-6 relative z-10">
+            <!-- Header -->
+            <div class="text-center mb-16 reveal-on-scroll">
+                <span class="text-premium-gold tracking-[0.2em] text-xs uppercase font-medium">Experience</span>
+                <h2 class="font-serif text-4xl md:text-5xl font-bold mt-4 text-gray-900">Professional Experience</h2>
+                <p class="mt-4 text-gray-500 font-light">Swipe to view experience • Click folder to open</p>
+            </div>
+
+            <!-- Folders 3D Coverflow -->
+            <div class="perspective-container w-full h-[450px] flex items-center justify-center">
+                <div id="internship-scroll" class="coverflow-scroll flex overflow-x-auto hide-scroll pb-16 pt-8 px-[50vw] snap-x snap-mandatory gap-8 items-center h-full w-full" onscroll="updateCoverflow(this)">
+                    
+                    <!-- Wow Woolies Folder -->
+                    <button onclick="openModal('internship-wow')" class="coverflow-item snap-center shrink-0 w-72 h-80 glass-panel-light rounded-3xl flex flex-col items-center justify-center p-8 cursor-pointer relative transition-all duration-500 ease-out origin-center transform border border-transparent hover:border-premium-gold/50 group">
+                        <!-- Top Tab visual -->
+                        <div class="absolute top-0 left-8 w-24 h-4 bg-indigo-100/50 rounded-t-lg -mt-2"></div>
                         
-                        <!-- Floating Badge -->
-                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-purple-600 shadow-sm">
-                            Live
+                        <div class="w-24 h-24 rounded-2xl bg-indigo-50 flex items-center justify-center text-indigo-500 shadow-sm mb-6 group-hover:scale-110 transition-transform">
+                            <i class="ph-fill ph-database text-6xl"></i>
                         </div>
-                    </div>
-                    <div class="p-8 flex-1 flex flex-col">
-                        <h4 class="text-xl font-bold text-slate-800 mb-1">Wow Woolies</h4>
-                        <p class="text-xs font-bold text-purple-500 uppercase mb-4 tracking-wider">E-Commerce Platform</p>
-                        <p class="text-slate-600 text-sm mb-6 flex-1 leading-relaxed">
-                            Designed and structured MongoDB collections supporting platform functionality. Improved data performance through efficient queries. Worked on production-level system.
-                        </p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="px-2 py-1 bg-purple-50 text-purple-700 rounded text-[10px] font-bold uppercase">MongoDB</span>
-                            <span class="px-2 py-1 bg-purple-50 text-purple-700 rounded text-[10px] font-bold uppercase">SQL</span>
-                            <span class="px-2 py-1 bg-purple-50 text-purple-700 rounded text-[10px] font-bold uppercase">Canva</span>
-                        </div>
-                        <a href="https://wowwoolies.co.in" target="_blank" class="w-full py-3 rounded-xl bg-slate-900 text-white text-sm font-bold flex items-center justify-center gap-2 hover:bg-purple-600 shadow-md hover:shadow-lg hover:shadow-purple-200 transition-all group-hover:translate-y-[-2px]">
-                            Visit Site <i class="fa-solid fa-arrow-right -rotate-45"></i>
-                        </a>
-                    </div>
-                </div>
+                        <h3 class="font-serif text-2xl font-bold text-gray-800 text-center">Wow Woolies</h3>
+                        <p class="text-gray-500 text-sm mt-2 font-medium text-center">Database Developer</p>
+                        <div class="mt-4 px-4 py-1 rounded-full bg-indigo-50 text-indigo-600 text-xs font-bold tracking-wider uppercase">Click to Open</div>
+                    </button>
 
-                <!-- Project 2 -->
-                <div class="glass-card rounded-3xl overflow-hidden flex flex-col group cursor-pointer">
-                    <div class="h-56 bg-blue-50 flex items-center justify-center relative overflow-hidden group-hover:bg-blue-100 transition-colors duration-500">
-                        <div class="absolute inset-0 bg-gradient-to-br from-blue-100 to-white opacity-50"></div>
-                        <i class="fa-solid fa-plane-up text-6xl text-blue-300 group-hover:scale-110 group-hover:text-blue-400 transition-all duration-500"></i>
-                    </div>
-                    <div class="p-8 flex-1 flex flex-col">
-                        <h4 class="text-xl font-bold text-slate-800 mb-1">Wanderlust</h4>
-                        <p class="text-xs font-bold text-blue-500 uppercase mb-4 tracking-wider">Travel Booking Platform</p>
-                        <p class="text-slate-600 text-sm mb-6 flex-1 leading-relaxed">
-                            Built an MVC-structured platform. Implemented secure login (Passport.js), integrated Cloudinary for media, and Mapbox for location features. Deployed on Render.
-                        </p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="px-2 py-1 bg-blue-50 text-blue-600 rounded text-[10px] font-bold uppercase">Node.js</span>
-                            <span class="px-2 py-1 bg-blue-50 text-blue-600 rounded text-[10px] font-bold uppercase">Express.js</span>
-                            <span class="px-2 py-1 bg-blue-50 text-blue-600 rounded text-[10px] font-bold uppercase">MongoDB</span>
-                        </div>
-                        <a href="https://github.com/nidhi829n" target="_blank" class="w-full py-3 rounded-xl bg-white border border-slate-200 text-slate-700 text-sm font-bold flex items-center justify-center gap-2 hover:border-blue-400 hover:text-blue-600 hover:shadow-md transition-all group-hover:translate-y-[-2px]">
-                            View Code <i class="fa-brands fa-github"></i>
-                        </a>
-                    </div>
                 </div>
-
-                <!-- Project 3 -->
-                <div class="glass-card rounded-3xl overflow-hidden flex flex-col group cursor-pointer">
-                    <div class="h-56 bg-green-50 flex items-center justify-center relative overflow-hidden group-hover:bg-green-100 transition-colors duration-500">
-                        <div class="absolute inset-0 bg-gradient-to-br from-green-100 to-white opacity-50"></div>
-                        <i class="fa-solid fa-gamepad text-6xl text-green-300 group-hover:scale-110 group-hover:text-green-400 transition-all duration-500"></i>
-                    </div>
-                    <div class="p-8 flex-1 flex flex-col">
-                        <h4 class="text-xl font-bold text-slate-800 mb-1">Simon Game</h4>
-                        <p class="text-xs font-bold text-green-500 uppercase mb-4 tracking-wider">Browser Memory Game</p>
-                        <p class="text-slate-600 text-sm mb-6 flex-1 leading-relaxed">
-                            Developed a dynamic game with level progression. Implemented DOM events, animations, and real-time validation. Designed a responsive interface.
-                        </p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="px-2 py-1 bg-green-50 text-green-600 rounded text-[10px] font-bold uppercase">HTML</span>
-                            <span class="px-2 py-1 bg-green-50 text-green-600 rounded text-[10px] font-bold uppercase">CSS</span>
-                            <span class="px-2 py-1 bg-green-50 text-green-600 rounded text-[10px] font-bold uppercase">JavaScript</span>
-                        </div>
-                        <a href="https://github.com/nidhi829n" target="_blank" class="w-full py-3 rounded-xl bg-white border border-slate-200 text-slate-700 text-sm font-bold flex items-center justify-center gap-2 hover:border-green-400 hover:text-green-600 hover:shadow-md transition-all group-hover:translate-y-[-2px]">
-                            Play Demo <i class="fa-solid fa-play"></i>
-                        </a>
-                    </div>
-                </div>
-
             </div>
         </div>
     </section>
 
-    <!-- Skills & Education Section -->
-    <section id="skills" class="py-20">
-        <div class="container mx-auto px-6">
-            <div class="grid md:grid-cols-2 gap-12 items-start">
-                <!-- Skills Column -->
-                <div>
-                    <h2 class="text-purple-600 font-bold text-sm uppercase tracking-wide mb-4">Technical Arsenal</h2>
+    <!-- ================= PROJECTS SECTION ================= -->
+    <section id="projects" class="relative w-full py-24 bg-gray-50 overflow-hidden">
+        
+        <!-- Decoration: Large blurred orb in background -->
+        <div class="absolute top-20 left-20 w-[400px] h-[400px] bg-purple-100 blur-[100px] rounded-full opacity-60 pointer-events-none"></div>
+        <div class="absolute bottom-20 right-20 w-[500px] h-[500px] bg-teal-50 blur-[100px] rounded-full opacity-60 pointer-events-none"></div>
+
+        <div class="container mx-auto px-6 relative z-10">
+            <!-- Header -->
+            <div class="text-center mb-16 reveal-on-scroll">
+                <span class="text-premium-gold tracking-[0.2em] text-xs uppercase font-medium">Portfolio</span>
+                <h2 class="font-serif text-4xl md:text-5xl font-bold mt-4 text-gray-900">Featured Projects</h2>
+                <p class="mt-4 text-gray-500 font-light">Tap to view details</p>
+            </div>
+
+            <!-- Projects Grid -->
+            <div class="w-full max-w-5xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     
-                    <div class="space-y-6">
-                        <div>
-                            <h4 class="font-bold text-slate-800 mb-2">Languages</h4>
-                            <div class="flex flex-wrap gap-3">
-                                <span class="skill-card px-4 py-2 bg-white border border-slate-200 rounded-full text-sm font-medium text-slate-700 shadow-sm flex items-center gap-2"><i class="fa-brands fa-java text-orange-500"></i> Java</span>
-                                <span class="skill-card px-4 py-2 bg-white border border-slate-200 rounded-full text-sm font-medium text-slate-700 shadow-sm flex items-center gap-2"><i class="fa-brands fa-js text-yellow-500"></i> JS</span>
-                                <span class="skill-card px-4 py-2 bg-white border border-slate-200 rounded-full text-sm font-medium text-slate-700 shadow-sm flex items-center gap-2"><i class="fa-brands fa-python text-blue-500"></i> Python</span>
-                                <span class="skill-card px-4 py-2 bg-white border border-slate-200 rounded-full text-sm font-medium text-slate-700 shadow-sm flex items-center gap-2"><i class="fa-brands fa-html5 text-orange-600"></i> HTML/CSS</span>
-                            </div>
+                    <!-- Project 1: Wanderlust -->
+                    <button onclick="openModal('project-wanderlust')" class="glass-panel-light rounded-3xl flex flex-col items-center justify-center p-10 cursor-pointer relative transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:border-premium-gold/50 group h-96 w-full">
+                        <div class="w-24 h-24 rounded-2xl bg-teal-50 flex items-center justify-center text-teal-600 shadow-sm mb-6 group-hover:scale-110 transition-transform duration-300">
+                            <i class="ph-fill ph-airplane-tilt text-6xl"></i>
                         </div>
-                        <div>
-                            <h4 class="font-bold text-slate-800 mb-2">Backend & Databases</h4>
-                            <div class="flex flex-wrap gap-3">
-                                <span class="skill-card px-4 py-2 bg-white border border-slate-200 rounded-full text-sm font-medium text-slate-700 shadow-sm flex items-center gap-2"><i class="fa-brands fa-node text-green-600"></i> Node.js</span>
-                                <span class="skill-card px-4 py-2 bg-white border border-slate-200 rounded-full text-sm font-medium text-slate-700 shadow-sm flex items-center gap-2"><i class="fa-solid fa-server text-gray-600"></i> REST APIs</span>
-                                <span class="skill-card px-4 py-2 bg-white border border-slate-200 rounded-full text-sm font-medium text-slate-700 shadow-sm flex items-center gap-2"><i class="fa-solid fa-database text-green-500"></i> MongoDB</span>
-                                <span class="skill-card px-4 py-2 bg-white border border-slate-200 rounded-full text-sm font-medium text-slate-700 shadow-sm flex items-center gap-2"><i class="fa-solid fa-table text-blue-500"></i> SQL</span>
-                            </div>
+                        <h3 class="font-serif text-2xl font-bold text-gray-800 text-center group-hover:text-premium-gold transition-colors">Wanderlust</h3>
+                        <p class="text-gray-500 text-sm mt-2 font-medium text-center px-2">Travel Booking Platform</p>
+                        <div class="mt-6 flex gap-2 justify-center">
+                            <span class="px-2 py-1 bg-gray-100 rounded text-[10px] font-bold text-gray-500 uppercase">Node.js</span>
+                            <span class="px-2 py-1 bg-gray-100 rounded text-[10px] font-bold text-gray-500 uppercase">MongoDB</span>
                         </div>
-                        <div>
-                            <h4 class="font-bold text-slate-800 mb-2">Tools & Core</h4>
-                            <div class="flex flex-wrap gap-3">
-                                <span class="skill-card px-4 py-2 bg-white border border-slate-200 rounded-full text-sm font-medium text-slate-700 shadow-sm flex items-center gap-2"><i class="fa-brands fa-git-alt text-red-500"></i> Git/GitHub</span>
-                                <span class="skill-card px-4 py-2 bg-white border border-slate-200 rounded-full text-sm font-medium text-slate-700 shadow-sm flex items-center gap-2"><i class="fa-solid fa-bolt text-orange-400"></i> Postman</span>
-                                <span class="skill-card px-4 py-2 bg-white border border-slate-200 rounded-full text-sm font-medium text-slate-700 shadow-sm flex items-center gap-2"><i class="fa-solid fa-bug text-red-400"></i> Debugging</span>
-                                <span class="skill-card px-4 py-2 bg-white border border-slate-200 rounded-full text-sm font-medium text-slate-700 shadow-sm flex items-center gap-2"><i class="fa-solid fa-puzzle-piece text-purple-500"></i> API Integration</span>
-                                <span class="skill-card px-4 py-2 bg-white border border-slate-200 rounded-full text-sm font-medium text-slate-700 shadow-sm flex items-center gap-2"><i class="fa-solid fa-code text-blue-400"></i> VS Code</span>
-                            </div>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-slate-800 mb-2">Soft Skills</h4>
-                            <div class="flex flex-wrap gap-3">
-                                <span class="px-3 py-1 bg-slate-100 rounded-full text-xs text-slate-600">Problem-Solving</span>
-                                <span class="px-3 py-1 bg-slate-100 rounded-full text-xs text-slate-600">Teamwork</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                        <div class="absolute bottom-8 px-6 py-2 rounded-full bg-teal-600 text-white text-xs font-bold tracking-wider uppercase shadow-lg shadow-teal-200 group-hover:shadow-teal-300 transition-shadow">View Details</div>
+                    </button>
 
-                <!-- Education & Certifications Column -->
-                <div class="space-y-8">
-                    <!-- Education -->
-                    <div class="glass-card p-8 rounded-2xl border-l-4 border-blue-500">
-                        <h3 class="text-xl font-bold text-slate-900 mb-4">Education</h3>
-                        <h4 class="font-bold text-slate-800">Government Women's Engineering College, Ajmer</h4>
-                        <p class="text-slate-600">B.Tech in Computer Science and Engineering</p>
-                        <div class="flex justify-between items-center mt-4">
-                            <span class="text-sm font-bold text-blue-600 bg-blue-50 px-3 py-1 rounded-full">2023 - Present</span>
-                            <span class="font-bold text-slate-800">CGPA: 8.52</span>
+                    <!-- Project 2: Simon Game -->
+                    <button onclick="openModal('project-simon')" class="glass-panel-light rounded-3xl flex flex-col items-center justify-center p-10 cursor-pointer relative transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:border-premium-gold/50 group h-96 w-full">
+                        <div class="w-24 h-24 rounded-2xl bg-red-50 flex items-center justify-center text-red-600 shadow-sm mb-6 group-hover:scale-110 transition-transform duration-300">
+                            <i class="ph-fill ph-game-controller text-6xl"></i>
                         </div>
-                    </div>
+                        <h3 class="font-serif text-2xl font-bold text-gray-800 text-center group-hover:text-premium-gold transition-colors">Simon Game</h3>
+                        <p class="text-gray-500 text-sm mt-2 font-medium text-center px-2">Browser Memory Game</p>
+                        <div class="mt-6 flex gap-2 justify-center">
+                            <span class="px-2 py-1 bg-gray-100 rounded text-[10px] font-bold text-gray-500 uppercase">JS</span>
+                            <span class="px-2 py-1 bg-gray-100 rounded text-[10px] font-bold text-gray-500 uppercase">DOM</span>
+                        </div>
+                        <div class="absolute bottom-8 px-6 py-2 rounded-full bg-red-600 text-white text-xs font-bold tracking-wider uppercase shadow-lg shadow-red-200 group-hover:shadow-red-300 transition-shadow">View Details</div>
+                    </button>
 
-                    <!-- Certifications -->
-                    <div class="glass-card p-8 rounded-2xl border-l-4 border-green-500">
-                        <h3 class="text-xl font-bold text-slate-900 mb-4">Certifications</h3>
-                        <ul class="space-y-3 text-slate-600 text-sm">
-                            <li class="flex items-center gap-2"><i class="fa-solid fa-certificate text-green-500"></i> Postman API Fundamentals (Postman)</li>
-                            <li class="flex items-center gap-2"><i class="fa-solid fa-certificate text-green-500"></i> Cybersecurity Awareness (LinkedIn)</li>
-                            <li class="flex items-center gap-2"><i class="fa-solid fa-certificate text-green-500"></i> Introduction to Data Science (Infosys Springboard)</li>
-                        </ul>
-                    </div>
+                    <!-- Project 3: Wow Woolies -->
+                    <button onclick="openModal('project-wow')" class="glass-panel-light rounded-3xl flex flex-col items-center justify-center p-10 cursor-pointer relative transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:border-premium-gold/50 group h-96 w-full">
+                        <div class="w-24 h-24 rounded-2xl bg-indigo-50 flex items-center justify-center text-indigo-600 shadow-sm mb-6 group-hover:scale-110 transition-transform duration-300">
+                            <i class="ph-fill ph-shopping-cart text-6xl"></i>
+                        </div>
+                        <h3 class="font-serif text-2xl font-bold text-gray-800 text-center group-hover:text-premium-gold transition-colors">Wow Woolies</h3>
+                        <p class="text-gray-500 text-sm mt-2 font-medium text-center px-2">E-Commerce Platform</p>
+                        <div class="mt-6 flex gap-2 justify-center">
+                            <span class="px-2 py-1 bg-gray-100 rounded text-[10px] font-bold text-gray-500 uppercase">Live</span>
+                            <span class="px-2 py-1 bg-gray-100 rounded text-[10px] font-bold text-gray-500 uppercase">Startup</span>
+                        </div>
+                        <div class="absolute bottom-8 px-6 py-2 rounded-full bg-indigo-600 text-white text-xs font-bold tracking-wider uppercase shadow-lg shadow-indigo-200 group-hover:shadow-indigo-300 transition-shadow">View Details</div>
+                    </button>
+
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Achievements Section -->
-    <section class="py-12">
-        <div class="container mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="glass-card p-6 rounded-2xl text-center hover:bg-purple-50/50">
-                    <div class="text-4xl font-heading font-bold text-purple-600 mb-2">150+</div>
-                    <div class="text-xs font-bold text-slate-400 uppercase tracking-widest">LeetCode Problems</div>
+    <!-- ================= EDUCATION SECTION ================= -->
+    <section id="education" class="relative w-full py-24 bg-white overflow-hidden text-gray-900">
+        
+        <!-- Cinematic Background Atmosphere -->
+        <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-multiply pointer-events-none"></div>
+        <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-orange-50 blur-[120px] rounded-full pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-blue-50 blur-[100px] rounded-full pointer-events-none"></div>
+
+        <div class="container mx-auto px-6 relative z-10 max-w-6xl">
+            <!-- Header -->
+            <div class="text-center mb-32 reveal-on-scroll">
+                <span class="text-premium-gold tracking-[0.3em] text-xs uppercase font-bold glow-text">The Journey</span>
+                <h2 class="font-serif text-5xl md:text-6xl font-bold mt-4 text-gray-900">Academic Chronology</h2>
+                <p class="text-gray-500 mt-4 font-light max-w-md mx-auto">A timeline of milestones and intellectual growth.</p>
+            </div>
+
+            <!-- The Spire Container -->
+            <div class="relative" id="timeline-container">
+                
+                <!-- The Central Spire Line (Background Track) -->
+                <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-gray-200 md:-translate-x-1/2 rounded-full"></div>
+                
+                <!-- The Progress Line (Fills on Scroll) -->
+                <div id="spire-progress" class="absolute left-4 md:left-1/2 top-0 w-0.5 bg-gradient-to-b from-premium-gold via-yellow-400 to-premium-gold md:-translate-x-1/2 rounded-full shadow-[0_0_15px_rgba(200,163,89,0.6)] transition-all duration-100 ease-out" style="height: 0%;"></div>
+
+                <!-- TIMELINE ITEM 1: B.Tech -->
+                <div class="timeline-item relative flex flex-col md:flex-row items-center justify-between mb-32 group perspective-1000">
+                    
+                    <!-- Date/Label (Desktop Left) -->
+                    <div class="hidden md:flex w-5/12 justify-end pr-16">
+                        <div class="text-right transition-all duration-500 group-hover:translate-x-[-10px]">
+                            <h3 class="text-premium-gold font-bold text-4xl font-serif tracking-tight">Present</h3>
+                            <p class="text-gray-400 text-sm font-medium mt-1 uppercase tracking-widest">2023 - Now</p>
+                        </div>
+                    </div>
+
+                    <!-- The "Time Ring" Node -->
+                    <div class="absolute left-4 md:left-1/2 transform -translate-x-1/2 flex items-center justify-center z-20">
+                        <div class="w-16 h-16 rounded-full border border-gray-200 flex items-center justify-center group-hover:border-premium-gold/50 transition-colors duration-500 relative bg-white">
+                            <div class="absolute inset-0 rounded-full border-t border-premium-gold/80 animate-spin-slow opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            <div class="absolute inset-2 rounded-full border-b border-blue-500/50 animate-spin-reverse-slow opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            
+                            <!-- Inner Core -->
+                            <div class="w-4 h-4 rounded-full bg-white border-2 border-premium-gold shadow-[0_0_10px_rgba(200,163,89,0.8)] z-10"></div>
+                        </div>
+                    </div>
+
+                    <!-- Card (Desktop Right) -->
+                    <div class="w-full md:w-5/12 pl-16 md:pl-16">
+                        <div class="tilt-card glass-panel-light p-8 rounded-3xl relative overflow-hidden group-hover:shadow-[0_20px_40px_-10px_rgba(200,163,89,0.2)] group-hover:border-premium-gold/30 transition-all duration-500">
+                            
+                            <!-- Shine Effect -->
+                            <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-gradient-to-tr from-transparent via-white/40 to-transparent pointer-events-none transform -translate-x-full group-hover:translate-x-full" style="transition: transform 1.5s ease-in-out;"></div>
+
+                            <div class="relative z-10">
+                                <div class="flex justify-between items-start mb-4">
+                                    <div class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center text-blue-500 border border-blue-100">
+                                        <i class="ph-fill ph-student text-2xl"></i>
+                                    </div>
+                                    <span class="px-3 py-1 bg-premium-gold/10 text-premium-gold text-[10px] font-bold uppercase tracking-wider rounded-full border border-premium-gold/20">Pursuing</span>
+                                </div>
+                                <h3 class="font-serif text-3xl font-bold text-gray-900 mb-1">B.Tech (CSE)</h3>
+                                <p class="text-gray-500 text-sm font-medium mb-6">Government Women's Engineering College, Ajmer</p>
+                                
+                                <div class="grid grid-cols-2 gap-4 border-t border-gray-100 pt-6">
+                                    <div>
+                                        <p class="text-gray-400 text-xs uppercase tracking-wider mb-1">CGPA</p>
+                                        <p class="text-2xl font-bold text-premium-gold">8.52</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-gray-400 text-xs uppercase tracking-wider mb-1">Focus</p>
+                                        <p class="text-sm text-gray-600">Computer Science</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="glass-card p-6 rounded-2xl text-center hover:bg-blue-50/50">
-                    <div class="text-2xl font-heading font-bold text-blue-600 mb-2">SheFi Scholar</div>
-                    <div class="text-xs font-bold text-slate-400 uppercase tracking-widest">Achievement</div>
-                </div>
-                <div class="glass-card p-6 rounded-2xl text-center hover:bg-pink-50/50">
-                    <div class="text-xl font-heading font-bold text-pink-600 mb-2">GSSoC Contributor</div>
-                    <div class="text-xs font-bold text-slate-400 uppercase tracking-widest">GirlScript Summer of Code</div>
-                </div>
-                <div class="glass-card p-6 rounded-2xl text-center hover:bg-orange-50/50">
-                    <div class="text-xl font-heading font-bold text-orange-600 mb-2">Mentee</div>
-                    <div class="text-xs font-bold text-slate-400 uppercase tracking-widest">Goldman Sachs & Atlassian</div>
-                </div>
+
             </div>
         </div>
     </section>
 
-    <!-- Contact & Footer -->
-    <footer id="contact" class="py-20 bg-white/60">
-        <div class="container mx-auto px-6 text-center">
-            <h2 class="text-3xl md:text-4xl font-heading font-bold text-slate-900 mb-8">Let's Create Something Beautiful.</h2>
-            <p class="text-slate-600 mb-8"><i class="fa-solid fa-phone mr-2"></i> +91 63785 69197</p>
-            
-            <div class="flex justify-center gap-6 mb-8">
-                <a href="mailto:mishra2004nidhi@gmail.com" class="px-10 py-4 bg-slate-900 text-white rounded-full font-bold shadow-lg hover:bg-purple-600 transition-all hover:-translate-y-1 shadow-purple-200">
-                    Say Hello
-                </a>
-                <a href="NidhiMishra_Resume.pdf" target="_blank" class="px-10 py-4 bg-white border border-slate-200 text-slate-700 rounded-full font-bold hover:border-purple-400 hover:text-purple-600 transition-all hover:shadow-md relative overflow-hidden group">
-                    <span class="relative z-10">Download Resume</span>
-                    <div class="absolute inset-0 bg-purple-50 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left -z-0"></div>
-                </a>
+    <!-- ================= ACHIEVEMENTS SECTION ================= -->
+    <section id="achievements" class="relative w-full py-24 bg-gray-50 overflow-hidden">
+        <!-- Background Elements -->
+        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-premium-gold/5 blur-[100px] rounded-full pointer-events-none"></div>
+        
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center mb-16 reveal-on-scroll">
+                <span class="text-premium-gold tracking-[0.2em] text-xs uppercase font-medium">Recognitions</span>
+                <h2 class="font-serif text-4xl md:text-5xl font-bold mt-4 text-gray-900">Honors & Achievements</h2>
             </div>
 
-            <!-- Social Links in Footer -->
-            <div class="flex justify-center gap-6 mb-8 text-2xl">
-                <a href="https://www.linkedin.com/in/nidhi-mishra-512327243/" target="_blank" class="text-slate-400 hover:text-blue-600 transition-colors transform hover:scale-110">
-                    <i class="fa-brands fa-linkedin"></i>
-                </a>
-                <a href="https://github.com/nidhi829n" target="_blank" class="text-slate-400 hover:text-gray-900 transition-colors transform hover:scale-110">
-                    <i class="fa-brands fa-github"></i>
-                </a>
-                <a href="mailto:mishra2004nidhi@gmail.com" class="text-slate-400 hover:text-red-500 transition-colors transform hover:scale-110">
-                    <i class="fa-solid fa-envelope"></i>
-                </a>
-            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Achievement 1: GSoC -->
+                <div class="glass-panel-light p-8 rounded-3xl hover:transform hover:-translate-y-2 transition-all duration-300 reveal-on-scroll">
+                    <div class="w-14 h-14 rounded-full bg-orange-50 flex items-center justify-center text-orange-600 mb-6">
+                        <i class="ph-fill ph-code text-3xl"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold text-gray-900 mb-2">GSoC Contributor</h3>
+                    <p class="text-gray-600 text-sm mb-4">GirlScript Summer of Code</p>
+                    <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Open Source</span>
+                </div>
 
-            <div class="text-slate-400 text-sm font-medium">
-                &copy; 2025 Nidhi Mishra. Designed with Moon Aesthetics.
+                <!-- Achievement 2: Goldman Sachs -->
+                <div class="glass-panel-light p-8 rounded-3xl hover:transform hover:-translate-y-2 transition-all duration-300 reveal-on-scroll" style="transition-delay: 100ms;">
+                    <div class="w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 mb-6">
+                        <i class="ph-fill ph-buildings text-3xl"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold text-gray-900 mb-2">Mentee</h3>
+                    <p class="text-gray-600 text-sm mb-4">Goldman Sachs Mentorship</p>
+                    <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Finance & Tech</span>
+                </div>
+
+                 <!-- Achievement 3: Atlassian -->
+                <div class="glass-panel-light p-8 rounded-3xl hover:transform hover:-translate-y-2 transition-all duration-300 reveal-on-scroll" style="transition-delay: 200ms;">
+                    <div class="w-14 h-14 rounded-full bg-cyan-50 flex items-center justify-center text-cyan-600 mb-6">
+                        <i class="ph-fill ph-users-three text-3xl"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold text-gray-900 mb-2">Mentee</h3>
+                    <p class="text-gray-600 text-sm mb-4">Atlassian</p>
+                    <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Career Growth</span>
+                </div>
+
+                <!-- Achievement 4: SheFi Scholar -->
+                <div class="glass-panel-light p-8 rounded-3xl hover:transform hover:-translate-y-2 transition-all duration-300 reveal-on-scroll" style="transition-delay: 300ms;">
+                    <div class="w-14 h-14 rounded-full bg-purple-50 flex items-center justify-center text-purple-600 mb-6">
+                        <i class="ph-fill ph-student text-3xl"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold text-gray-900 mb-2">SheFi Scholar</h3>
+                    <p class="text-gray-600 text-sm mb-4">Blockchain & DeFi</p>
+                    <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Scholarship</span>
+                </div>
+
+                 <!-- Achievement 5: LeetCode -->
+                <div class="glass-panel-light p-8 rounded-3xl hover:transform hover:-translate-y-2 transition-all duration-300 reveal-on-scroll" style="transition-delay: 400ms;">
+                    <div class="w-14 h-14 rounded-full bg-yellow-50 flex items-center justify-center text-yellow-600 mb-6">
+                        <i class="ph-fill ph-brackets-curly text-3xl"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold text-gray-900 mb-2">150+ Problems</h3>
+                    <p class="text-gray-600 text-sm mb-4">LeetCode Solved</p>
+                    <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">DSA</span>
+                </div>
+                
+                 <!-- Achievement 6: Live Deployment -->
+                <div class="glass-panel-light p-8 rounded-3xl hover:transform hover:-translate-y-2 transition-all duration-300 reveal-on-scroll" style="transition-delay: 500ms;">
+                    <div class="w-14 h-14 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-600 mb-6">
+                        <i class="ph-fill ph-rocket-launch text-3xl"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold text-gray-900 mb-2">Live Production</h3>
+                    <p class="text-gray-600 text-sm mb-4">wowwoolies.co.in</p>
+                    <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">E-Commerce</span>
+                </div>
+
             </div>
+        </div>
+    </section>
+    
+    <!-- ================= FOOTER ================= -->
+    <footer class="relative py-24 bg-premium-dark text-white overflow-hidden">
+        <div class="absolute inset-0 bg-premium-gold/5 blur-[150px] pointer-events-none"></div>
+        <div class="container mx-auto px-6 relative z-10 text-center">
+            <h2 class="font-serif text-5xl md:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-gray-400 via-white to-gray-400 mb-8">Let's Build Something<br/>Remarkable Together.</h2>
+            <div class="flex flex-col items-center gap-6">
+                <a href="mailto:mishra2004nidhi@gmail.com" class="px-8 py-4 rounded-full bg-white text-black font-semibold text-lg hover:scale-105 transition-transform">Get in Touch</a>
+                <div class="flex gap-4">
+                     <a href="https://www.linkedin.com/in/nidhi-mishra-512327243/" target="_blank" class="text-gray-400 hover:text-white transition-colors"><i class="ph-fill ph-linkedin-logo text-2xl"></i></a>
+                     <a href="https://github.com/nidhi829n" target="_blank" class="text-gray-400 hover:text-white transition-colors"><i class="ph-fill ph-github-logo text-2xl"></i></a>
+                </div>
+            </div>
+            <p class="mt-16 text-gray-600 text-sm">© 2025 Nidhi Mishra. All Rights Reserved.</p>
         </div>
     </footer>
 
+    <!-- ================= MODAL COMPONENT (Hidden by Default) ================= -->
+    <div id="info-modal" class="fixed inset-0 z-[100] hidden">
+        <!-- Backdrop -->
+        <div class="absolute inset-0 modal-backdrop transition-opacity duration-300 opacity-0" id="modal-backdrop"></div>
+        
+        <!-- Modal Content -->
+        <div class="absolute inset-0 flex items-center justify-center p-4">
+            <div class="glass-modal-card w-full max-w-2xl max-h-[85vh] rounded-3xl overflow-hidden transform scale-95 opacity-0 transition-all duration-500 flex flex-col" id="modal-card">
+                
+                <!-- Close Button -->
+                <button onclick="closeModal()" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-black/5 hover:bg-black/10 flex items-center justify-center transition-colors z-20">
+                    <i class="ph ph-x text-xl text-gray-600"></i>
+                </button>
+
+                <!-- Scrollable Content -->
+                <div class="overflow-y-auto p-8 md:p-12 hide-scroll">
+                    <div id="modal-content-container">
+                        <!-- Content injected via JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= JAVASCRIPT LOGIC ================= -->
     <script>
-        // Navbar Scroll Effect
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 20) {
-                navbar.classList.add('bg-white/80', 'backdrop-blur-md', 'shadow-sm');
-                navbar.classList.remove('py-4');
-                navbar.classList.add('py-2');
-            } else {
-                navbar.classList.remove('bg-white/80', 'backdrop-blur-md', 'shadow-sm');
-                navbar.classList.add('py-4');
-                navbar.classList.remove('py-2');
+        // Data Store for Modal Content
+        const modalData = {
+            // --- Skills Data ---
+            'skill-languages': {
+                title: 'Programming Languages',
+                subtitle: 'Core Competencies',
+                icon: 'ph-code',
+                color: 'text-orange-600',
+                bg: 'bg-orange-50',
+                description: `
+                    <ul class="space-y-4 text-gray-600 text-lg">
+                        <li class="flex items-center gap-3"><i class="ph-fill ph-check-circle text-orange-500"></i><span>Java</span></li>
+                        <li class="flex items-center gap-3"><i class="ph-fill ph-check-circle text-orange-500"></i><span>JavaScript (JS)</span></li>
+                        <li class="flex items-center gap-3"><i class="ph-fill ph-check-circle text-orange-500"></i><span>Python</span></li>
+                        <li class="flex items-center gap-3"><i class="ph-fill ph-check-circle text-orange-500"></i><span>HTML</span></li>
+                        <li class="flex items-center gap-3"><i class="ph-fill ph-check-circle text-orange-500"></i><span>CSS</span></li>
+                    </ul>
+                `
+            },
+            'skill-backend': {
+                title: 'Backend Development',
+                subtitle: 'Server-Side Architecture',
+                icon: 'ph-server',
+                color: 'text-green-600',
+                bg: 'bg-green-50',
+                description: `
+                    <ul class="space-y-4 text-gray-600 text-lg">
+                        <li class="flex items-center gap-3"><i class="ph-fill ph-check-circle text-green-500"></i><span>Node.js</span></li>
+                        <li class="flex items-center gap-3"><i class="ph-fill ph-check-circle text-green-500"></i><span>REST APIs</span></li>
+                        <li class="flex items-center gap-3"><i class="ph-fill ph-check-circle text-green-500"></i><span>Express.js</span></li>
+                        <li class="flex items-center gap-3"><i class="ph-fill ph-check-circle text-green-500"></i><span>Passport.js (Auth)</span></li>
+                        <li class="flex items-center gap-3"><i class="ph-fill ph-check-circle text-green-500"></i><span>MVC Structure</span></li>
+                    </ul>
+                `
+            },
+            'skill-frontend': {
+                title: 'Frontend Development',
+                subtitle: 'User Interface & Experience',
+                icon: 'ph-browser',
+                color: 'text-purple-600',
+                bg: 'bg-purple-50',
+                description: `
+                    <ul class="space-y-4 text-gray-600 text-lg">
+                        <li class="flex items-center gap-3"><i class="ph-fill ph-check-circle text-purple-500"></i><span>Bootstrap</span></li>
+                        <li class="flex items-center gap-3"><i class="ph-fill ph-check-circle text-purple-500"></i><span>Responsive UI Design</span></li>
+                        <li class="flex items-center gap-3"><i class="ph-fill ph-check-circle text-purple-500"></i><span>DOM Manipulation</span></li>
+                        <li class="flex items-center gap-3"><i class="ph-fill ph-check-circle text-purple-500"></i><span>HTML5 & CSS3</span></li>
+                    </ul>
+                `
+            },
+            'skill-db': {
+                title: 'Databases',
+                subtitle: 'Data Storage & Optimization',
+                icon: 'ph-database',
+                color: 'text-yellow-600',
+                bg: 'bg-yellow-50',
+                description: `
+                    <ul class="space-y-4 text-gray-600 text-lg">
+                        <li class="flex items-center gap-3"><i class="ph-fill ph-check-circle text-yellow-500"></i><span>MongoDB (Collections, Queries)</span></li>
+                        <li class="flex items-center gap-3"><i class="ph-fill ph-check-circle text-yellow-500"></i><span>SQL</span></li>
+                        <li class="flex items-center gap-3"><i class="ph-fill ph-check-circle text-yellow-500"></i><span>Performance Tuning</span></li>
+                    </ul>
+                `
+            },
+            'skill-tools': {
+                title: 'Tools & Platforms',
+                subtitle: 'Development Workflow',
+                icon: 'ph-toolbox',
+                color: 'text-gray-600',
+                bg: 'bg-gray-50',
+                description: `
+                    <ul class="space-y-4 text-gray-600 text-lg">
+                        <li class="flex items-center gap-3"><i class="ph-fill ph-check-circle text-gray-500"></i><span>Git & GitHub</span></li>
+                        <li class="flex items-center gap-3"><i class="ph-fill ph-check-circle text-gray-500"></i><span>VS Code</span></li>
+                        <li class="flex items-center gap-3"><i class="ph-fill ph-check-circle text-gray-500"></i><span>Postman (API Testing)</span></li>
+                        <li class="flex items-center gap-3"><i class="ph-fill ph-check-circle text-gray-500"></i><span>Canva</span></li>
+                    </ul>
+                `
+            },
+            'skill-core': {
+                title: 'Core Technical Skills',
+                subtitle: 'Key Competencies',
+                icon: 'ph-gear',
+                color: 'text-blue-600',
+                bg: 'bg-blue-50',
+                description: `
+                    <ul class="space-y-4 text-gray-600 text-lg">
+                        <li class="flex items-center gap-3"><i class="ph-fill ph-check-circle text-blue-500"></i><span>Debugging</span></li>
+                        <li class="flex items-center gap-3"><i class="ph-fill ph-check-circle text-blue-500"></i><span>API Integration</span></li>
+                        <li class="flex items-center gap-3"><i class="ph-fill ph-check-circle text-blue-500"></i><span>Database Management</span></li>
+                        <li class="flex items-center gap-3"><i class="ph-fill ph-check-circle text-blue-500"></i><span>Clean Coding</span></li>
+                    </ul>
+                `
+            },
+            'skill-soft': {
+                title: 'Soft Skills',
+                subtitle: 'Interpersonal Skills',
+                icon: 'ph-users',
+                color: 'text-teal-600',
+                bg: 'bg-teal-50',
+                description: `
+                    <ul class="space-y-4 text-gray-600 text-lg">
+                        <li class="flex items-center gap-3"><i class="ph-fill ph-check-circle text-teal-500"></i><span>Problem-Solving</span></li>
+                        <li class="flex items-center gap-3"><i class="ph-fill ph-check-circle text-teal-500"></i><span>Teamwork</span></li>
+                        <li class="flex items-center gap-3"><i class="ph-fill ph-check-circle text-teal-500"></i><span>Cross-Team Collaboration</span></li>
+                    </ul>
+                `
+            },
+            'skill-certifications': {
+                title: 'Certifications',
+                subtitle: 'Professional Growth',
+                icon: 'ph-certificate',
+                color: 'text-red-600',
+                bg: 'bg-red-50',
+                description: `
+                    <ul class="space-y-4 text-gray-600 text-lg">
+                        <li class="flex items-center gap-3"><i class="ph-fill ph-check-circle text-red-500"></i><span>Postman API Fundamentals</span></li>
+                        <li class="flex items-center gap-3"><i class="ph-fill ph-check-circle text-red-500"></i><span>Cybersecurity Awareness (LinkedIn)</span></li>
+                        <li class="flex items-center gap-3"><i class="ph-fill ph-check-circle text-red-500"></i><span>Intro to Data Science (Infosys)</span></li>
+                    </ul>
+                `
+            },
+
+            // --- Experience & Project Data ---
+            'internship-wow': {
+                title: 'Database Developer',
+                subtitle: 'Wow Woolies (<a href="http://moonnow.in/" target="_blank" class="text-indigo-600 underline hover:text-indigo-800">MOON Startup</a>) | Sept 2025 - Oct 2025',
+                icon: 'ph-database',
+                color: 'text-indigo-600',
+                bg: 'bg-indigo-50',
+                description: `
+                    <p class="mb-4 text-gray-600 leading-relaxed">Built and supported a production-grade, scalable MongoDB setup for a live E-commerce platform.</p>
+                    <h4 class="font-bold text-gray-900 mt-6 mb-3">Key Contributions:</h4>
+                    <ul class="space-y-3 text-gray-600">
+                        <li class="flex gap-3"><i class="ph-fill ph-check-circle text-indigo-500 mt-1"></i><span>Scalable Database Work: Designed efficient MongoDB collections to support platform functionality.</span></li>
+                        <li class="flex gap-3"><i class="ph-fill ph-check-circle text-indigo-500 mt-1"></i><span>Performance Tuning: Improved query speed and data reliability for production systems.</span></li>
+                        <li class="flex gap-3"><i class="ph-fill ph-check-circle text-indigo-500 mt-1"></i><span>Cross-Team Collaboration: Coordinated with backend teams for seamless API-database communication.</span></li>
+                    </ul>
+                `
+            },
+            'project-wanderlust': {
+                title: 'Wanderlust',
+                subtitle: 'Travel Booking Platform | GitHub Repository',
+                icon: 'ph-airplane-tilt',
+                color: 'text-teal-600',
+                bg: 'bg-teal-50',
+                description: `
+                    <p class="mb-4 text-gray-600 leading-relaxed">Built an MVC-structured travel booking platform with modular backend routing.</p>
+                    <h4 class="font-bold text-gray-900 mt-6 mb-3">Technical Details:</h4>
+                    <ul class="space-y-3 text-gray-600">
+                        <li class="flex gap-3"><i class="ph-fill ph-check-circle text-teal-500 mt-1"></i><span>Implemented secure login and role-based access using Passport.js.</span></li>
+                        <li class="flex gap-3"><i class="ph-fill ph-check-circle text-teal-500 mt-1"></i><span>Integrated Cloudinary for media uploads and Mapbox for location-based features.</span></li>
+                        <li class="flex gap-3"><i class="ph-fill ph-check-circle text-teal-500 mt-1"></i><span>Deployed on Render with reliable cloud connectivity.</span></li>
+                    </ul>
+                `
+            },
+            'project-simon': {
+                title: 'Simon Game',
+                subtitle: 'Browser Memory Game | HTML, CSS, JS',
+                icon: 'ph-game-controller',
+                color: 'text-red-600',
+                bg: 'bg-red-50',
+                description: `
+                    <p class="mb-4 text-gray-600 leading-relaxed">Developed a dynamic browser-based memory game with level progression.</p>
+                    <h4 class="font-bold text-gray-900 mt-6 mb-3">Features:</h4>
+                    <ul class="space-y-3 text-gray-600">
+                        <li class="flex gap-3"><i class="ph-fill ph-check-circle text-red-500 mt-1"></i><span>Implemented DOM events, animations, and real-time validation.</span></li>
+                        <li class="flex gap-3"><i class="ph-fill ph-check-circle text-red-500 mt-1"></i><span>Designed a clean and responsive interface for smooth gameplay.</span></li>
+                    </ul>
+                `
+            },
+            'project-wow': {
+                title: 'E-Commerce Platform',
+                subtitle: 'wowwoolies.co.in | Production System',
+                icon: 'ph-shopping-cart',
+                color: 'text-indigo-600',
+                bg: 'bg-indigo-50',
+                description: `
+                    <p class="mb-4 text-gray-600 leading-relaxed">Contributed to a live e-commerce platform within the MOON startup environment.</p>
+                    <h4 class="font-bold text-gray-900 mt-6 mb-3">Key Work:</h4>
+                    <ul class="space-y-3 text-gray-600">
+                        <li class="flex gap-3"><i class="ph-fill ph-check-circle text-indigo-500 mt-1"></i><span>Designed and structured MongoDB collections supporting platform functionality.</span></li>
+                        <li class="flex gap-3"><i class="ph-fill ph-check-circle text-indigo-500 mt-1"></i><span>Improved data performance through efficient MongoDB queries.</span></li>
+                        <li class="flex gap-3"><i class="ph-fill ph-check-circle text-indigo-500 mt-1"></i><span>Worked on a production-level system under the MOON startup ecosystem.</span></li>
+                    </ul>
+                `
+            }
+        };
+
+        // --- Logic for Modals ---
+        function openModal(key) {
+            const data = modalData[key];
+            if (!data) return;
+
+            const modal = document.getElementById('info-modal');
+            const backdrop = document.getElementById('modal-backdrop');
+            const card = document.getElementById('modal-card');
+            const container = document.getElementById('modal-content-container');
+
+            // Inject Content
+            container.innerHTML = `
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-16 h-16 rounded-2xl ${data.bg} flex items-center justify-center ${data.color}">
+                        <i class="ph-fill ${data.icon} text-4xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-serif text-2xl font-bold text-gray-900">${data.title}</h3>
+                        <p class="text-sm font-medium text-gray-500 uppercase tracking-wide">${data.subtitle}</p>
+                    </div>
+                </div>
+                <div class="text-lg">
+                    ${data.description}
+                </div>
+            `;
+
+            // Show Modal
+            modal.classList.remove('hidden');
+            // Small delay to allow display:block to apply before opacity transition
+            setTimeout(() => {
+                backdrop.classList.remove('opacity-0');
+                card.classList.remove('opacity-0', 'scale-95');
+                card.classList.add('opacity-100', 'scale-100');
+            }, 10);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('info-modal');
+            const backdrop = document.getElementById('modal-backdrop');
+            const card = document.getElementById('modal-card');
+
+            backdrop.classList.add('opacity-0');
+            card.classList.remove('opacity-100', 'scale-100');
+            card.classList.add('opacity-0', 'scale-95');
+
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300); // Wait for transition
+        }
+
+        // Close on backdrop click
+        document.getElementById('modal-backdrop').addEventListener('click', closeModal);
+
+        // --- Logic for Coverflow/Scroll ---
+        function updateCoverflow(scrollContainer) {
+            // Optional: Add logic here if you want to scale items based on center position
+            // For now, the CSS snap-x handles the positioning well.
+        }
+
+        // --- Logic for Clipboard Copy ---
+        function copyToClipboard(text, tooltipId) {
+            const tempInput = document.createElement('input');
+            tempInput.value = text;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+
+            const tooltip = document.getElementById(tooltipId);
+            const originalText = tooltip.innerText;
+            tooltip.innerText = "Copied!";
+            tooltip.style.visibility = "visible";
+            tooltip.style.opacity = "1";
+            
+            setTimeout(() => {
+                tooltip.innerText = originalText;
+                // Reset to CSS hover state behavior (handled by CSS, so we just clear inline styles)
+                tooltip.style.visibility = "";
+                tooltip.style.opacity = "";
+            }, 2000);
+        }
+
+        // --- Logic for Reveal on Scroll & Timeline ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
+
+            // Timeline Progress
+            const timelineContainer = document.getElementById('timeline-container');
+            const progressBar = document.getElementById('spire-progress');
+            
+            if(timelineContainer && progressBar) {
+                window.addEventListener('scroll', () => {
+                    const rect = timelineContainer.getBoundingClientRect();
+                    const windowHeight = window.innerHeight;
+                    
+                    if (rect.top < windowHeight && rect.bottom > 0) {
+                        const totalHeight = rect.height;
+                        const scrolled = windowHeight - rect.top - (windowHeight / 2); // Start filling when container hits middle
+                        let percentage = (scrolled / totalHeight) * 100;
+                        
+                        percentage = Math.max(0, Math.min(100, percentage));
+                        progressBar.style.height = `${percentage}%`;
+                    }
+                });
             }
         });
     </script>
