@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nidhi Mishra | Backend Architect</title>
+    <title>Nidhi Mishra | Database Developer</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <script>
@@ -15,31 +15,35 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['"Space Grotesk"', 'sans-serif'],
-                        display: ['"Syne"', 'sans-serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        heading: ['"Outfit"', 'sans-serif'],
                     },
                     colors: {
                         moon: {
-                            bg: '#F8FAFC',
-                            void: '#020617',
-                            accent: '#7C3AED',
-                            lavender: '#E9D5FF',
+                            base: '#FFFFFF',
+                            lavender: '#E6E6FA',
+                            purple: '#805AD5',
+                            text: '#2D3748',
                         }
                     },
                     animation: {
                         'float': 'float 6s ease-in-out infinite',
-                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'spin-slow': 'spin 20s linear infinite',
-                        'star-move': 'starMove 50s linear infinite',
+                        'float-delayed': 'float 6s ease-in-out 3s infinite',
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'shimmer': 'shimmer 2s linear infinite',
                     },
                     keyframes: {
                         float: {
                             '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-10px)' },
+                            '50%': { transform: 'translateY(-20px)' },
                         },
-                        starMove: {
-                            '0%': { backgroundPosition: '0 0' },
-                            '100%': { backgroundPosition: '0 1000px' },
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        shimmer: {
+                            '0%': { backgroundPosition: '-200% 0' },
+                            '100%': { backgroundPosition: '200% 0' },
                         }
                     }
                 }
@@ -48,459 +52,404 @@
     </script>
 
     <style>
-        html { scroll-behavior: smooth; }
-        body { background-color: #F8FAFC; perspective: 1000px; overflow-x: hidden; }
-
-        /* --- BACKGROUND DYNAMICS --- */
-        .premium-header-bg {
-            position: absolute; top: 0; left: 0; width: 100%; height: 90vh;
-            background-image: url('https://images.unsplash.com/photo-1614730341194-75c6074065db?q=80&w=2874&auto=format&fit=crop');
-            background-size: cover; background-position: center; opacity: 0.1;
-            mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
-            -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
-            z-index: -20; filter: grayscale(100%) contrast(1.2);
-        }
-        
-        /* Starfall Animation */
-        .starfall {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: 
-                radial-gradient(white 1px, transparent 1px),
-                radial-gradient(rgba(255,255,255,0.5) 1px, transparent 1px);
-            background-size: 50px 50px;
-            opacity: 0.3;
-            z-index: -10;
-            animation: starMove 60s linear infinite;
-        }
-
-        /* --- NAME PLACEHOLDER (NEBULA) --- */
-        .name-halo {
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 120%; height: 120%;
-            background: radial-gradient(circle, rgba(124, 58, 237, 0.15) 0%, rgba(139, 92, 246, 0.05) 40%, transparent 70%);
-            filter: blur(40px);
-            z-index: -1;
-            border-radius: 50%;
-            animation: pulse 5s infinite ease-in-out;
-        }
-
-        /* --- 3D TILT ENGINE --- */
-        .tilt-card {
+        /* Simple Glass Effect */
+        .glass {
             background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.9);
-            border-radius: 1.5rem;
-            transform-style: preserve-3d; transform: perspective(1000px);
-            transition: transform 0.1s ease-out; position: relative; overflow: visible;
-        }
-        .tilt-card:hover {
-            box-shadow: 0 20px 50px -10px rgba(124, 58, 237, 0.2), 0 0 0 1px rgba(139, 92, 246, 0.3);
-            z-index: 20;
-        }
-        .tilt-content { transform: translateZ(30px); position: relative; z-index: 10; }
-
-        /* --- SKILL DECK --- */
-        .deck-container {
-            display: flex; justify-content: center; align-items: center; height: 380px; perspective: 1000px; padding: 2rem 0; overflow-x: auto; overflow-y: visible;
-        }
-        .deck-card {
-            min-width: 220px; height: 300px; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 1.5rem; position: relative;
-            margin-left: -110px; transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1); transform-origin: center bottom;
-            box-shadow: -10px 0 30px rgba(0,0,0,0.3); cursor: pointer; overflow: hidden;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-        }
-        .deck-card:first-child { margin-left: 0; }
-        .deck-container:hover .deck-card { margin-left: -40px; transform: rotateY(10deg) scale(0.9); }
-        .deck-card:hover { transform: translateY(-30px) rotateY(0deg) scale(1.1) !important; z-index: 50; background: rgba(15, 23, 42, 0.95); border-color: rgba(139, 92, 246, 0.5); box-shadow: 0 20px 60px rgba(124, 58, 237, 0.4); margin-left: 20px !important; margin-right: 20px !important; }
-        .deck-card:hover ~ .deck-card { transform: translateX(40px) rotateY(-10deg) scale(0.9) !important; }
-        .card-bg-glow { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 150%; height: 150%; background: radial-gradient(circle, var(--glow-color, rgba(124,58,237,0.2)) 0%, transparent 70%); opacity: 0.3; animation: pulse-glow 4s infinite; pointer-events: none; }
-
-        @media (max-width: 768px) {
-            .deck-container { justify-content: flex-start; padding-left: 20px; padding-right: 20px; }
-            .deck-card { min-width: 220px; margin-left: -40px; }
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
         }
         
-        /* --- PROJECT LAUNCHER --- */
-        .launch-pad {
-            cursor: pointer;
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            transform-origin: center;
-        }
-        .launch-pad.deployed {
-            opacity: 0;
-            transform: scale(1.1);
-            pointer-events: none;
-            display: none;
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .projects-grid { display: none; perspective: 2000px; }
-        .projects-grid.active { display: grid; grid-template-columns: repeat(1, minmax(0, 1fr)); gap: 2rem; animation: fadeIn 0.5s forwards; }
-        @media (min-width: 1024px) { .projects-grid.active { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-
-        /* 3D Pop Animation */
-        .pop-card {
-            opacity: 0;
-            transform: scale(0.5) rotateX(-90deg) translateY(100px);
-            animation: deployCard 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        /* Premium Glow Hover */
+        .glass-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.95);
+            border-color: rgba(216, 180, 254, 0.5);
+            box-shadow: 
+                0 20px 40px -5px rgba(128, 90, 213, 0.15),
+                0 0 20px rgba(216, 180, 254, 0.4); /* Lavender Glow */
         }
-        .pop-card:nth-child(1) { animation-delay: 0.1s; }
-        .pop-card:nth-child(2) { animation-delay: 0.2s; }
-        .pop-card:nth-child(3) { animation-delay: 0.3s; }
 
-        @keyframes deployCard {
-            0% { opacity: 0; transform: scale(0.5) rotateX(-90deg) translateY(100px); }
-            100% { opacity: 1; transform: scale(1) rotateX(0deg) translateY(0); }
+        /* Button Shimmer Effect */
+        .btn-shimmer {
+            background: linear-gradient(90deg, #0F172A 0%, #334155 50%, #0F172A 100%);
+            background-size: 200% 100%;
+            animation: shimmer 3s infinite linear;
         }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* --- LIVE PREVIEW MOCKUP --- */
-        .browser-mockup {
+        /* Background Blobs */
+        .blob {
             position: absolute;
-            bottom: 20px; right: 20px;
-            width: 200px; height: 140px;
-            background: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-            border: 1px solid rgba(255,255,255,0.3);
-            transform: rotate(-5deg) translateY(0);
-            transition: all 0.4s ease;
-            z-index: 20;
-        }
-        .group:hover .browser-mockup {
-            transform: rotate(0deg) translateY(-10px) scale(1.1);
-            border-color: #A855F7;
-        }
-        .browser-header {
-            height: 12px; background: #f1f5f9; display: flex; align-items: center; gap: 4px; padding-left: 8px;
-        }
-        .browser-dot { width: 4px; height: 4px; border-radius: 50%; background: #cbd5e1; }
-        .browser-content {
-            width: 100%; height: 100%;
-            background-image: url('https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=800&auto=format&fit=crop'); /* Fashion Placeholder */
-            background-size: cover; background-position: top;
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.6;
+            animation: float 10s infinite ease-in-out;
         }
 
+        /* Gradient Text */
+        .text-gradient {
+            background: linear-gradient(135deg, #2D3748 0%, #805AD5 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        /* Interactive Skill Card */
+        .skill-card {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .skill-card:hover {
+            transform: scale(1.05);
+            background-color: #F3E8FF; /* Light Purple */
+            border-color: #D8B4FE;
+        }
+        .skill-card:hover i {
+            transform: rotate(10deg) scale(1.2);
+            transition: transform 0.3s ease;
+        }
     </style>
 </head>
-<body class="text-moon-void antialiased">
+<body class="bg-slate-50 text-gray-700 font-sans selection:bg-purple-200 selection:text-purple-900 overflow-x-hidden">
 
-    <div class="premium-header-bg"></div>
-    <div class="starfall"></div>
+    <!-- Background Elements -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none">
+        <div class="blob bg-purple-200 w-96 h-96 rounded-full top-0 left-[-100px] mix-blend-multiply"></div>
+        <div class="blob bg-pink-200 w-96 h-96 rounded-full top-[30%] right-[-100px] mix-blend-multiply animation-delay-2000"></div>
+        <div class="blob bg-blue-100 w-80 h-80 rounded-full bottom-[-50px] left-[20%] mix-blend-multiply animation-delay-4000"></div>
+    </div>
 
-    <main class="max-w-7xl mx-auto px-6 py-12 md:py-20 space-y-24 relative z-10">
-
-        <!-- 1. RESUME HEADER WITH PLACEHOLDER -->
-        <header class="text-center relative z-10 animate-slide-up-fade">
-            <div class="inline-block relative">
-                <!-- New Nebula Halo Placeholder Behind Name -->
-                <div class="name-halo"></div>
-                <h1 class="font-display font-extrabold text-7xl md:text-9xl tracking-tight text-moon-void mb-4 drop-shadow-sm relative z-10">
-                    NIDHI MISHRA
-                </h1>
-            </div>
-            <p class="font-sans text-lg md:text-xl font-medium tracking-[0.2em] text-purple-600 uppercase mb-8">
-                Backend Architect & Database Engineer
-            </p>
-            <div class="flex flex-wrap justify-center gap-6 md:gap-8 text-xs md:text-sm font-bold tracking-widest text-gray-500 uppercase">
-                <a href="mailto:mishra2004nidhi@gmail.com" class="hover:text-purple-600 transition-colors flex items-center gap-2 group">
-                    <i class="fa-regular fa-envelope text-lg"></i> Email Me
-                </a>
-                <span class="text-gray-300 self-center">|</span>
-                <span class="flex items-center gap-2">
-                     <i class="fa-solid fa-location-dot text-lg"></i> Rajasthan
-                </span>
-                <span class="text-gray-300 self-center">|</span>
-                <a href="https://github.com/mishra2004nidhi" target="_blank" class="hover:text-purple-600 transition-colors flex items-center gap-2 group">
-                    <i class="fa-brands fa-github text-lg"></i> GitHub
-                </a>
-            </div>
-        </header>
-
-        <!-- 2. SUMMARY CARD -->
-        <section class="animate-slide-up-fade max-w-5xl mx-auto" style="animation-delay: 0.2s;">
-            <div class="tilt-card p-8 md:p-16 text-center relative group">
-                <div class="tilt-content">
-                    <h2 class="font-display font-bold text-2xl md:text-3xl mb-6 md:mb-8 flex items-center justify-center gap-4 text-moon-void">
-                        <i class="fa-solid fa-moon text-purple-400 text-xl md:text-2xl animate-pulse"></i>
-                        Professional Summary
-                        <i class="fa-solid fa-moon text-purple-400 text-xl md:text-2xl animate-pulse"></i>
-                    </h2>
-                    <p class="font-sans text-base md:text-xl text-gray-600 leading-relaxed max-w-4xl mx-auto font-light">
-                        Computer Science undergraduate with hands-on experience in <strong class="text-purple-700 font-semibold">Backend Development</strong> and <strong class="text-purple-700 font-semibold">Database Management</strong>. Skilled in designing scalable MongoDB architectures, optimizing API workflows, and building clean, functional components for real-world applications. Recently contributed to a live e-commerce platform within the <strong class="text-moon-void font-bold">MOON startup ecosystem</strong>.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <!-- 3. SKILL DECK -->
-        <section class="animate-slide-up-fade" style="animation-delay: 0.3s;">
-            <h3 class="font-display font-bold text-xl text-gray-400 uppercase tracking-widest text-center mb-4">Technical Arsenal</h3>
-            <p class="text-center text-xs text-purple-400 font-bold uppercase tracking-widest mb-10 opacity-70">Hover over the deck to reveal</p>
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 top-0 transition-all duration-300" id="navbar">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-heading font-bold text-slate-800 flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-purple-500"></span>
+                Nidhi<span class="text-purple-600">.</span>
+            </a>
             
-            <div class="deck-container">
-                <!-- Cards... (Same as before but clean) -->
-                <div class="deck-card" style="--glow-color: rgba(34, 197, 94, 0.4)">
-                    <div class="card-bg-glow"></div>
-                    <div class="relative z-10 flex flex-col items-center gap-6">
-                        <i class="fa-brands fa-node text-6xl text-green-500"></i>
-                        <h4 class="text-white font-display font-bold text-2xl">Node.js</h4>
-                        <span class="text-gray-400 text-xs font-bold uppercase tracking-widest border-t border-gray-700 pt-2">Runtime</span>
-                    </div>
-                </div>
-                <div class="deck-card" style="--glow-color: rgba(34, 197, 94, 0.4)">
-                    <div class="card-bg-glow"></div>
-                    <div class="relative z-10 flex flex-col items-center gap-6">
-                        <i class="fa-solid fa-database text-6xl text-green-400"></i>
-                        <h4 class="text-white font-display font-bold text-2xl">MongoDB</h4>
-                        <span class="text-gray-400 text-xs font-bold uppercase tracking-widest border-t border-gray-700 pt-2">NoSQL DB</span>
-                    </div>
-                </div>
-                <div class="deck-card" style="--glow-color: rgba(249, 115, 22, 0.4)">
-                    <div class="card-bg-glow"></div>
-                    <div class="relative z-10 flex flex-col items-center gap-6">
-                        <i class="fa-brands fa-java text-6xl text-orange-500"></i>
-                        <h4 class="text-white font-display font-bold text-2xl">Java</h4>
-                        <span class="text-gray-400 text-xs font-bold uppercase tracking-widest border-t border-gray-700 pt-2">Core Logic</span>
-                    </div>
-                </div>
-                 <div class="deck-card" style="--glow-color: rgba(59, 130, 246, 0.4)">
-                    <div class="card-bg-glow"></div>
-                    <div class="relative z-10 flex flex-col items-center gap-6">
-                        <i class="fa-brands fa-python text-6xl text-blue-500"></i>
-                        <h4 class="text-white font-display font-bold text-2xl">Python</h4>
-                        <span class="text-gray-400 text-xs font-bold uppercase tracking-widest border-t border-gray-700 pt-2">Scripting</span>
-                    </div>
-                </div>
-                <div class="deck-card" style="--glow-color: rgba(234, 179, 8, 0.4)">
-                    <div class="card-bg-glow"></div>
-                    <div class="relative z-10 flex flex-col items-center gap-6">
-                        <i class="fa-brands fa-js text-6xl text-yellow-400"></i>
-                        <h4 class="text-white font-display font-bold text-2xl">JS</h4>
-                        <span class="text-gray-400 text-xs font-bold uppercase tracking-widest border-t border-gray-700 pt-2">Interactive</span>
-                    </div>
-                </div>
-                 <div class="deck-card" style="--glow-color: rgba(239, 68, 68, 0.4)">
-                    <div class="card-bg-glow"></div>
-                    <div class="relative z-10 flex flex-col items-center gap-6">
-                        <i class="fa-brands fa-git-alt text-6xl text-red-500"></i>
-                        <h4 class="text-white font-display font-bold text-2xl">Git</h4>
-                        <span class="text-gray-400 text-xs font-bold uppercase tracking-widest border-t border-gray-700 pt-2">Version</span>
-                    </div>
-                </div>
+            <div class="hidden md:flex space-x-8 items-center text-sm font-medium text-slate-600">
+                <a href="#about" class="hover:text-purple-600 transition-colors">About</a>
+                <a href="#experience" class="hover:text-purple-600 transition-colors">Experience</a>
+                <a href="#projects" class="hover:text-purple-600 transition-colors">Projects</a>
+                <a href="#skills" class="hover:text-purple-600 transition-colors">Skills</a>
+                <a href="#contact" class="px-5 py-2 rounded-full bg-slate-900 text-white hover:bg-purple-600 transition-all shadow-lg shadow-purple-200">Contact</a>
             </div>
-        </section>
+        </div>
+    </nav>
 
-        <!-- 4. PROJECT MANAGER (Click to Deploy) -->
-        <section class="animate-slide-up-fade max-w-7xl mx-auto" style="animation-delay: 0.4s;">
-            <div class="relative">
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center justify-center pt-20" id="about">
+        <div class="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+            <!-- Text -->
+            <div class="order-2 md:order-1 space-y-6 animate-fade-in-up">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-purple-100 text-purple-700 text-xs font-bold uppercase shadow-sm">
+                    <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+                    Available for Hire
+                </div>
                 
-                <!-- "Launch Pad" Trigger (Replaces Folder) -->
-                <div id="launchPad" class="launch-pad mx-auto w-full max-w-md bg-gradient-to-r from-purple-600 to-blue-600 p-[1px] rounded-full shadow-2xl group" onclick="activateProjects()">
-                    <div class="bg-white rounded-full px-8 py-4 flex items-center justify-between cursor-pointer group-hover:bg-transparent group-hover:text-white transition-colors duration-300">
-                        <div class="flex items-center gap-4">
-                            <div class="w-10 h-10 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center group-hover:bg-white group-hover:text-purple-600">
-                                <i class="fa-solid fa-rocket"></i>
-                            </div>
-                            <span class="font-display font-bold text-lg tracking-wide uppercase">Initialize Projects</span>
-                        </div>
-                        <i class="fa-solid fa-chevron-right"></i>
-                    </div>
-                </div>
+                <h1 class="text-5xl md:text-7xl font-heading font-bold leading-tight text-slate-900">
+                    Designing Logic <br>
+                    <span class="text-gradient">Beyond Clouds.</span>
+                </h1>
+                
+                <p class="text-lg text-slate-600 max-w-lg leading-relaxed">
+                    I am <span class="font-bold text-slate-800">Nidhi Mishra</span>, a Computer Science undergraduate from <strong>Government Women's Engineering College, Ajmer</strong>. I specialize in backend development, API workflows, and building scalable systems within startup ecosystems.
+                </p>
 
-                <!-- The Projects Grid (Horizontally Popped) -->
-                <div id="projectsGrid" class="projects-grid">
+                <div class="flex gap-4 pt-4">
+                    <a href="#projects" class="btn-shimmer px-8 py-3 bg-slate-900 text-white rounded-full font-medium hover:shadow-lg hover:shadow-purple-300 transition-all transform hover:-translate-y-1">
+                        View Work
+                    </a>
+                    <a href="https://github.com/nidhi829n" target="_blank" class="px-8 py-3 bg-white border border-slate-200 text-slate-700 rounded-full font-medium hover:border-purple-300 hover:text-purple-600 hover:shadow-md transition-all transform hover:-translate-y-1">
+                        GitHub
+                    </a>
+                </div>
+            </div>
+
+            <!-- Image -->
+            <div class="order-1 md:order-2 flex justify-center relative animate-fade-in-up" style="animation-delay: 0.2s;">
+                <div class="relative w-72 h-72 md:w-96 md:h-96">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-purple-200 to-pink-200 rounded-full mix-blend-multiply filter blur-2xl opacity-70 animate-float"></div>
+                    <div class="absolute inset-0 bg-gradient-to-tr from-blue-200 to-white rounded-full mix-blend-multiply filter blur-2xl opacity-70 animate-float-delayed ml-4 mt-4"></div>
                     
-                    <!-- Card 1: Wow Woolies (Premium with Live Mockup) -->
-                    <div class="tilt-card pop-card p-0 overflow-hidden border border-purple-400 bg-white shadow-2xl h-full min-h-[420px] group cursor-default">
-                        <div class="absolute inset-0 bg-gradient-to-br from-[#0B0A1F] to-[#2D1B4E] opacity-100 z-0"></div>
-                         <div class="tilt-content relative z-10 p-8 text-white flex flex-col h-full justify-between">
-                             <div>
-                                <div class="flex items-center gap-2 mb-4">
-                                    <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-                                    <span class="text-[10px] font-bold uppercase tracking-widest text-purple-200">Live Production</span>
-                                </div>
-                                <h3 class="font-display font-bold text-4xl mb-4">Wow Woolies</h3>
-                                
-                                <!-- SKILLS LISTED -->
-                                <div class="flex flex-wrap gap-2 mb-6">
-                                    <span class="px-2 py-1 bg-white/10 border border-white/20 rounded text-[10px] font-bold uppercase tracking-wider">MongoDB</span>
-                                    <span class="px-2 py-1 bg-white/10 border border-white/20 rounded text-[10px] font-bold uppercase tracking-wider">Express.js</span>
-                                    <span class="px-2 py-1 bg-white/10 border border-white/20 rounded text-[10px] font-bold uppercase tracking-wider">E-Commerce</span>
-                                </div>
-
-                                <p class="text-gray-300 text-sm leading-relaxed mb-6 max-w-[70%]">
-                                    Architected MongoDB schema for a live fashion brand. Optimized query speeds by 20%.
-                                </p>
-                             </div>
-                            <a href="https://wowwoolies.co.in" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-purple-500 text-white font-bold tracking-widest text-[10px] hover:bg-white hover:text-purple-900 transition-all shadow-lg hover:shadow-purple-500/50 w-fit">
-                                VISIT SITE <i class="fa-solid fa-arrow-right -rotate-45"></i>
-                            </a>
-                        </div>
-
-                        <!-- WORKING LIVE PREVIEW (Mockup) -->
-                        <div class="browser-mockup">
-                            <div class="browser-header">
-                                <div class="browser-dot bg-red-300"></div>
-                                <div class="browser-dot bg-yellow-300"></div>
-                                <div class="browser-dot bg-green-300"></div>
-                            </div>
-                            <div class="browser-content"></div>
-                        </div>
-                    </div>
-
-                    <!-- Card 2: Wanderlust -->
-                    <div class="tilt-card pop-card p-8 border-l-4 border-l-blue-400 flex flex-col h-full justify-between bg-white/80 hover:bg-white transition-colors">
-                         <div class="tilt-content w-full">
-                            <div class="flex justify-between w-full mb-4">
-                                <h3 class="font-display font-bold text-3xl text-moon-void">Wanderlust</h3>
-                                <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-500 text-lg">
-                                    <i class="fa-solid fa-plane-up"></i>
-                                </div>
-                            </div>
-                            
-                            <!-- SKILLS -->
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="px-2 py-1 bg-blue-50 border border-blue-100 rounded text-[10px] font-bold uppercase tracking-wide text-blue-600">Node.js</span>
-                                <span class="px-2 py-1 bg-blue-50 border border-blue-100 rounded text-[10px] font-bold uppercase tracking-wide text-blue-600">Mapbox</span>
-                                <span class="px-2 py-1 bg-blue-50 border border-blue-100 rounded text-[10px] font-bold uppercase tracking-wide text-blue-600">MVC</span>
-                            </div>
-
-                            <p class="text-sm text-gray-600 mb-6 leading-relaxed">Full-stack booking engine. Integrated geolocation and media storage.</p>
-                        </div>
-                        <div class="tilt-content flex justify-between items-center">
-                            <a href="https://github.com/mishra2004nidhi" target="_blank" class="text-xs font-bold uppercase tracking-widest border-b border-gray-300 hover:border-blue-500 hover:text-blue-600 transition-colors">Source Code</a>
-                            <a href="https://github.com/mishra2004nidhi" target="_blank" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-black hover:text-white transition-colors">
-                                <i class="fa-brands fa-github"></i>
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Card 3: Simon Game -->
-                    <div class="tilt-card pop-card p-8 border-l-4 border-l-yellow-400 flex flex-col h-full justify-between bg-white/80 hover:bg-white transition-colors">
-                         <div class="tilt-content w-full">
-                            <div class="flex justify-between w-full mb-4">
-                                <h3 class="font-display font-bold text-3xl text-moon-void">Simon Game</h3>
-                                <div class="w-10 h-10 rounded-full bg-yellow-50 flex items-center justify-center text-yellow-500 text-lg">
-                                    <i class="fa-solid fa-gamepad"></i>
-                                </div>
-                            </div>
-
-                            <!-- SKILLS -->
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="px-2 py-1 bg-yellow-50 border border-yellow-100 rounded text-[10px] font-bold uppercase tracking-wide text-yellow-600">JavaScript</span>
-                                <span class="px-2 py-1 bg-yellow-50 border border-yellow-100 rounded text-[10px] font-bold uppercase tracking-wide text-yellow-600">DOM</span>
-                                <span class="px-2 py-1 bg-yellow-50 border border-yellow-100 rounded text-[10px] font-bold uppercase tracking-wide text-yellow-600">Logic</span>
-                            </div>
-
-                            <p class="text-sm text-gray-600 mb-6 leading-relaxed">Interactive logic game with complex state management.</p>
-                        </div>
-                         <div class="tilt-content flex justify-between items-center">
-                            <a href="https://github.com/mishra2004nidhi" target="_blank" class="text-xs font-bold uppercase tracking-widest border-b border-gray-300 hover:border-yellow-500 hover:text-yellow-600 transition-colors">Play Demo</a>
-                            <a href="https://github.com/mishra2004nidhi" target="_blank" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-black hover:text-white transition-colors">
-                                <i class="fa-brands fa-github"></i>
-                            </a>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
-        <!-- 5. EXPERIENCE & EDUCATION -->
-        <section class="grid md:grid-cols-2 gap-8 animate-slide-up-fade max-w-5xl mx-auto" style="animation-delay: 0.5s;">
-            <div class="tilt-card p-10 border-t-4 border-t-blue-500">
-                <div class="tilt-content">
-                    <h3 class="font-display font-bold text-2xl mb-8">Experience</h3>
-                    <div class="relative pl-8 border-l border-gray-200">
-                        <div class="absolute -left-[5px] top-0 w-2.5 h-2.5 rounded-full bg-blue-500"></div>
-                        <div class="mb-4">
-                            <span class="text-xs font-bold uppercase tracking-widest text-blue-600 bg-blue-50 px-3 py-1 rounded">Sep - Oct 2025</span>
-                            <h4 class="font-bold text-xl mt-3 text-moon-void">Database Developer</h4>
-                            <p class="text-sm text-gray-500 font-bold uppercase tracking-wide">Wow Woolies (MOON Ecosystem)</p>
-                        </div>
-                        <p class="text-gray-600 text-sm leading-relaxed">Built scalable MongoDB setups and improved query performance in a startup environment.</p>
+                    <!-- Photo Container with Glow -->
+                    <div class="relative w-full h-full rounded-full overflow-hidden border-[6px] border-white shadow-[0_0_40px_rgba(128,90,213,0.2)]">
+                        <img src="image_85b09e.jpg" alt="Nidhi Mishra" class="w-full h-full object-cover">
                     </div>
                 </div>
             </div>
-            <div class="tilt-card p-10 border-t-4 border-t-purple-500">
-                <div class="tilt-content">
-                    <h3 class="font-display font-bold text-2xl mb-8">Education</h3>
-                    <div class="relative pl-8 border-l border-gray-200">
-                        <div class="absolute -left-[5px] top-0 w-2.5 h-2.5 rounded-full bg-purple-500"></div>
-                        <div class="mb-4">
-                            <span class="text-xs font-bold uppercase tracking-widest text-purple-600 bg-purple-50 px-3 py-1 rounded">2023 - Present</span>
-                            <h4 class="font-bold text-xl mt-3 text-moon-void">B.Tech Computer Science</h4>
-                            <p class="text-sm text-gray-500 font-bold uppercase tracking-wide">Govt Women's Engineering College</p>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="py-20">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12">
+                <div>
+                    <h2 class="text-purple-600 font-bold text-sm uppercase tracking-wide mb-2">My Journey</h2>
+                    <h3 class="text-3xl md:text-4xl font-heading font-bold text-slate-900">Experience</h3>
+                </div>
+            </div>
+
+            <div class="glass-card p-10 rounded-3xl border-l-4 border-purple-500 relative group">
+                <div class="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity duration-500">
+                    <i class="fa-solid fa-briefcase text-8xl text-purple-900"></i>
+                </div>
+                
+                <div class="flex flex-col md:flex-row gap-8 relative z-10">
+                    <div class="md:w-1/4">
+                        <span class="text-6xl font-heading font-bold text-purple-100 group-hover:text-purple-200 transition-colors">01</span>
+                        <div class="mt-2">
+                            <p class="font-bold text-slate-800 text-lg">Sept 2025 - Oct 2025</p>
+                            <p class="text-sm text-slate-500">Database Developer</p>
                         </div>
-                        <div class="flex items-center gap-3 bg-purple-50 p-3 rounded-xl w-fit">
-                            <span class="text-3xl font-bold text-purple-700">8.52</span>
-                            <span class="text-[10px] font-bold text-purple-400 uppercase tracking-widest">Current CGPA</span>
+                    </div>
+                    <div class="md:w-3/4">
+                        <h4 class="text-2xl font-bold text-slate-800">Wow Woolies</h4>
+                        <div class="flex items-center gap-2 mb-4 mt-1">
+                            <span class="text-purple-600 font-medium">MOON Ecosystem</span>
+                            <span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
+                            <span class="text-slate-500">Ajmer, Rajasthan</span>
                         </div>
+                        <ul class="text-slate-600 leading-relaxed text-lg list-disc pl-5 space-y-2">
+                            <li><strong>Scalable Database Work:</strong> Built and supported a production-grade, scalable MongoDB setup.</li>
+                            <li><strong>Performance Tuning:</strong> Improved MongoDB query speed, reliability, and data efficiency.</li>
+                            <li><strong>Startup Deployment Exposure:</strong> Worked on backend components in a live startup environment.</li>
+                            <li><strong>Cross-Team Collaboration:</strong> Coordinated with backend teams for seamless API-database communication.</li>
+                        </ul>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- 6. ACHIEVEMENTS -->
-        <section class="tilt-card p-10 animate-slide-up-fade max-w-5xl mx-auto" style="animation-delay: 0.6s;">
-            <div class="tilt-content flex flex-wrap justify-between items-center gap-8">
-                <div class="text-center flex-1">
-                    <div class="text-4xl font-bold text-purple-600 mb-2">150+</div>
-                    <div class="text-[10px] font-bold uppercase tracking-widest text-gray-400">LeetCode</div>
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 bg-white/50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-purple-600 font-bold text-sm uppercase tracking-wide mb-2">Portfolio</h2>
+                <h3 class="text-3xl md:text-4xl font-heading font-bold text-slate-900">Featured Projects</h3>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                
+                <!-- Project 1 -->
+                <div class="glass-card rounded-3xl overflow-hidden flex flex-col group cursor-pointer">
+                    <div class="h-56 bg-purple-50 flex items-center justify-center relative overflow-hidden group-hover:bg-purple-100 transition-colors duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-br from-purple-100 to-white opacity-50"></div>
+                        <i class="fa-solid fa-bag-shopping text-6xl text-purple-300 group-hover:scale-110 group-hover:text-purple-400 transition-all duration-500"></i>
+                        
+                        <!-- Floating Badge -->
+                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-purple-600 shadow-sm">
+                            Live
+                        </div>
+                    </div>
+                    <div class="p-8 flex-1 flex flex-col">
+                        <h4 class="text-xl font-bold text-slate-800 mb-1">Wow Woolies</h4>
+                        <p class="text-xs font-bold text-purple-500 uppercase mb-4 tracking-wider">E-Commerce Platform</p>
+                        <p class="text-slate-600 text-sm mb-6 flex-1 leading-relaxed">
+                            Designed and structured MongoDB collections supporting platform functionality. Improved data performance through efficient queries. Worked on production-level system.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-2 py-1 bg-purple-50 text-purple-700 rounded text-[10px] font-bold uppercase">MongoDB</span>
+                            <span class="px-2 py-1 bg-purple-50 text-purple-700 rounded text-[10px] font-bold uppercase">SQL</span>
+                            <span class="px-2 py-1 bg-purple-50 text-purple-700 rounded text-[10px] font-bold uppercase">Canva</span>
+                        </div>
+                        <a href="https://wowwoolies.co.in" target="_blank" class="w-full py-3 rounded-xl bg-slate-900 text-white text-sm font-bold flex items-center justify-center gap-2 hover:bg-purple-600 shadow-md hover:shadow-lg hover:shadow-purple-200 transition-all group-hover:translate-y-[-2px]">
+                            Visit Site <i class="fa-solid fa-arrow-right -rotate-45"></i>
+                        </a>
+                    </div>
                 </div>
-                <div class="w-px h-16 bg-gray-200 hidden md:block"></div>
-                <div class="text-center flex-1">
-                    <div class="text-2xl font-bold text-moon-void mb-2">SheFi</div>
-                    <div class="text-[10px] font-bold uppercase tracking-widest text-gray-400">Scholar</div>
+
+                <!-- Project 2 -->
+                <div class="glass-card rounded-3xl overflow-hidden flex flex-col group cursor-pointer">
+                    <div class="h-56 bg-blue-50 flex items-center justify-center relative overflow-hidden group-hover:bg-blue-100 transition-colors duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-br from-blue-100 to-white opacity-50"></div>
+                        <i class="fa-solid fa-plane-up text-6xl text-blue-300 group-hover:scale-110 group-hover:text-blue-400 transition-all duration-500"></i>
+                    </div>
+                    <div class="p-8 flex-1 flex flex-col">
+                        <h4 class="text-xl font-bold text-slate-800 mb-1">Wanderlust</h4>
+                        <p class="text-xs font-bold text-blue-500 uppercase mb-4 tracking-wider">Travel Booking Platform</p>
+                        <p class="text-slate-600 text-sm mb-6 flex-1 leading-relaxed">
+                            Built an MVC-structured platform. Implemented secure login (Passport.js), integrated Cloudinary for media, and Mapbox for location features. Deployed on Render.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-2 py-1 bg-blue-50 text-blue-600 rounded text-[10px] font-bold uppercase">Node.js</span>
+                            <span class="px-2 py-1 bg-blue-50 text-blue-600 rounded text-[10px] font-bold uppercase">Express.js</span>
+                            <span class="px-2 py-1 bg-blue-50 text-blue-600 rounded text-[10px] font-bold uppercase">MongoDB</span>
+                        </div>
+                        <a href="https://github.com/nidhi829n" target="_blank" class="w-full py-3 rounded-xl bg-white border border-slate-200 text-slate-700 text-sm font-bold flex items-center justify-center gap-2 hover:border-blue-400 hover:text-blue-600 hover:shadow-md transition-all group-hover:translate-y-[-2px]">
+                            View Code <i class="fa-brands fa-github"></i>
+                        </a>
+                    </div>
                 </div>
-                <div class="w-px h-16 bg-gray-200 hidden md:block"></div>
-                <div class="text-center flex-1">
-                    <div class="text-2xl font-bold text-moon-void mb-2">GSSoC</div>
-                    <div class="text-[10px] font-bold uppercase tracking-widest text-gray-400">Contributor</div>
+
+                <!-- Project 3 -->
+                <div class="glass-card rounded-3xl overflow-hidden flex flex-col group cursor-pointer">
+                    <div class="h-56 bg-green-50 flex items-center justify-center relative overflow-hidden group-hover:bg-green-100 transition-colors duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-br from-green-100 to-white opacity-50"></div>
+                        <i class="fa-solid fa-gamepad text-6xl text-green-300 group-hover:scale-110 group-hover:text-green-400 transition-all duration-500"></i>
+                    </div>
+                    <div class="p-8 flex-1 flex flex-col">
+                        <h4 class="text-xl font-bold text-slate-800 mb-1">Simon Game</h4>
+                        <p class="text-xs font-bold text-green-500 uppercase mb-4 tracking-wider">Browser Memory Game</p>
+                        <p class="text-slate-600 text-sm mb-6 flex-1 leading-relaxed">
+                            Developed a dynamic game with level progression. Implemented DOM events, animations, and real-time validation. Designed a responsive interface.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-2 py-1 bg-green-50 text-green-600 rounded text-[10px] font-bold uppercase">HTML</span>
+                            <span class="px-2 py-1 bg-green-50 text-green-600 rounded text-[10px] font-bold uppercase">CSS</span>
+                            <span class="px-2 py-1 bg-green-50 text-green-600 rounded text-[10px] font-bold uppercase">JavaScript</span>
+                        </div>
+                        <a href="https://github.com/nidhi829n" target="_blank" class="w-full py-3 rounded-xl bg-white border border-slate-200 text-slate-700 text-sm font-bold flex items-center justify-center gap-2 hover:border-green-400 hover:text-green-600 hover:shadow-md transition-all group-hover:translate-y-[-2px]">
+                            Play Demo <i class="fa-solid fa-play"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills & Education Section -->
+    <section id="skills" class="py-20">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-12 items-start">
+                <!-- Skills Column -->
+                <div>
+                    <h2 class="text-purple-600 font-bold text-sm uppercase tracking-wide mb-4">Technical Arsenal</h2>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <h4 class="font-bold text-slate-800 mb-2">Languages</h4>
+                            <div class="flex flex-wrap gap-3">
+                                <span class="skill-card px-4 py-2 bg-white border border-slate-200 rounded-full text-sm font-medium text-slate-700 shadow-sm flex items-center gap-2"><i class="fa-brands fa-java text-orange-500"></i> Java</span>
+                                <span class="skill-card px-4 py-2 bg-white border border-slate-200 rounded-full text-sm font-medium text-slate-700 shadow-sm flex items-center gap-2"><i class="fa-brands fa-js text-yellow-500"></i> JS</span>
+                                <span class="skill-card px-4 py-2 bg-white border border-slate-200 rounded-full text-sm font-medium text-slate-700 shadow-sm flex items-center gap-2"><i class="fa-brands fa-python text-blue-500"></i> Python</span>
+                                <span class="skill-card px-4 py-2 bg-white border border-slate-200 rounded-full text-sm font-medium text-slate-700 shadow-sm flex items-center gap-2"><i class="fa-brands fa-html5 text-orange-600"></i> HTML/CSS</span>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-800 mb-2">Backend & Databases</h4>
+                            <div class="flex flex-wrap gap-3">
+                                <span class="skill-card px-4 py-2 bg-white border border-slate-200 rounded-full text-sm font-medium text-slate-700 shadow-sm flex items-center gap-2"><i class="fa-brands fa-node text-green-600"></i> Node.js</span>
+                                <span class="skill-card px-4 py-2 bg-white border border-slate-200 rounded-full text-sm font-medium text-slate-700 shadow-sm flex items-center gap-2"><i class="fa-solid fa-server text-gray-600"></i> REST APIs</span>
+                                <span class="skill-card px-4 py-2 bg-white border border-slate-200 rounded-full text-sm font-medium text-slate-700 shadow-sm flex items-center gap-2"><i class="fa-solid fa-database text-green-500"></i> MongoDB</span>
+                                <span class="skill-card px-4 py-2 bg-white border border-slate-200 rounded-full text-sm font-medium text-slate-700 shadow-sm flex items-center gap-2"><i class="fa-solid fa-table text-blue-500"></i> SQL</span>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-800 mb-2">Tools & Core</h4>
+                            <div class="flex flex-wrap gap-3">
+                                <span class="skill-card px-4 py-2 bg-white border border-slate-200 rounded-full text-sm font-medium text-slate-700 shadow-sm flex items-center gap-2"><i class="fa-brands fa-git-alt text-red-500"></i> Git/GitHub</span>
+                                <span class="skill-card px-4 py-2 bg-white border border-slate-200 rounded-full text-sm font-medium text-slate-700 shadow-sm flex items-center gap-2"><i class="fa-solid fa-bolt text-orange-400"></i> Postman</span>
+                                <span class="skill-card px-4 py-2 bg-white border border-slate-200 rounded-full text-sm font-medium text-slate-700 shadow-sm flex items-center gap-2"><i class="fa-solid fa-bug text-red-400"></i> Debugging</span>
+                                <span class="skill-card px-4 py-2 bg-white border border-slate-200 rounded-full text-sm font-medium text-slate-700 shadow-sm flex items-center gap-2"><i class="fa-solid fa-puzzle-piece text-purple-500"></i> API Integration</span>
+                                <span class="skill-card px-4 py-2 bg-white border border-slate-200 rounded-full text-sm font-medium text-slate-700 shadow-sm flex items-center gap-2"><i class="fa-solid fa-code text-blue-400"></i> VS Code</span>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-800 mb-2">Soft Skills</h4>
+                            <div class="flex flex-wrap gap-3">
+                                <span class="px-3 py-1 bg-slate-100 rounded-full text-xs text-slate-600">Problem-Solving</span>
+                                <span class="px-3 py-1 bg-slate-100 rounded-full text-xs text-slate-600">Teamwork</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Education & Certifications Column -->
+                <div class="space-y-8">
+                    <!-- Education -->
+                    <div class="glass-card p-8 rounded-2xl border-l-4 border-blue-500">
+                        <h3 class="text-xl font-bold text-slate-900 mb-4">Education</h3>
+                        <h4 class="font-bold text-slate-800">Government Women's Engineering College, Ajmer</h4>
+                        <p class="text-slate-600">B.Tech in Computer Science and Engineering</p>
+                        <div class="flex justify-between items-center mt-4">
+                            <span class="text-sm font-bold text-blue-600 bg-blue-50 px-3 py-1 rounded-full">2023 - Present</span>
+                            <span class="font-bold text-slate-800">CGPA: 8.52</span>
+                        </div>
+                    </div>
+
+                    <!-- Certifications -->
+                    <div class="glass-card p-8 rounded-2xl border-l-4 border-green-500">
+                        <h3 class="text-xl font-bold text-slate-900 mb-4">Certifications</h3>
+                        <ul class="space-y-3 text-slate-600 text-sm">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-certificate text-green-500"></i> Postman API Fundamentals (Postman)</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-certificate text-green-500"></i> Cybersecurity Awareness (LinkedIn)</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-certificate text-green-500"></i> Introduction to Data Science (Infosys Springboard)</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <footer class="text-center text-gray-400 text-xs font-bold uppercase tracking-widest pt-12 pb-6">
-            <p>&copy; 2025 Nidhi Mishra. Moon Premium Architecture.</p>
-        </footer>
+    <!-- Achievements Section -->
+    <section class="py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="glass-card p-6 rounded-2xl text-center hover:bg-purple-50/50">
+                    <div class="text-4xl font-heading font-bold text-purple-600 mb-2">150+</div>
+                    <div class="text-xs font-bold text-slate-400 uppercase tracking-widest">LeetCode Problems</div>
+                </div>
+                <div class="glass-card p-6 rounded-2xl text-center hover:bg-blue-50/50">
+                    <div class="text-2xl font-heading font-bold text-blue-600 mb-2">SheFi Scholar</div>
+                    <div class="text-xs font-bold text-slate-400 uppercase tracking-widest">Achievement</div>
+                </div>
+                <div class="glass-card p-6 rounded-2xl text-center hover:bg-pink-50/50">
+                    <div class="text-xl font-heading font-bold text-pink-600 mb-2">GSSoC Contributor</div>
+                    <div class="text-xs font-bold text-slate-400 uppercase tracking-widest">GirlScript Summer of Code</div>
+                </div>
+                <div class="glass-card p-6 rounded-2xl text-center hover:bg-orange-50/50">
+                    <div class="text-xl font-heading font-bold text-orange-600 mb-2">Mentee</div>
+                    <div class="text-xs font-bold text-slate-400 uppercase tracking-widest">Goldman Sachs & Atlassian</div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    </main>
+    <!-- Contact & Footer -->
+    <footer id="contact" class="py-20 bg-white/60">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-3xl md:text-4xl font-heading font-bold text-slate-900 mb-8">Let's Create Something Beautiful.</h2>
+            <p class="text-slate-600 mb-8"><i class="fa-solid fa-phone mr-2"></i> +91 63785 69197</p>
+            <div class="flex justify-center gap-6 mb-12">
+                <a href="mailto:mishra2004nidhi@gmail.com" class="px-10 py-4 bg-slate-900 text-white rounded-full font-bold shadow-lg hover:bg-purple-600 transition-all hover:-translate-y-1 shadow-purple-200">
+                    Say Hello
+                </a>
+                <a href="NidhiMishra_Resume.pdf" target="_blank" class="px-10 py-4 bg-white border border-slate-200 text-slate-700 rounded-full font-bold hover:border-purple-400 hover:text-purple-600 transition-all hover:shadow-md relative overflow-hidden group">
+                    <span class="relative z-10">Download Resume</span>
+                    <div class="absolute inset-0 bg-purple-50 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left -z-0"></div>
+                </a>
+            </div>
+            <div class="text-slate-400 text-sm font-medium">
+                &copy; 2025 Nidhi Mishra. Designed with Moon Aesthetics.
+            </div>
+        </div>
+    </footer>
 
     <script>
-        // 3D Tilt Script
-        document.addEventListener('DOMContentLoaded', () => {
-            const cards = document.querySelectorAll('.tilt-card');
-            cards.forEach(card => {
-                card.addEventListener('mousemove', (e) => {
-                    const rect = card.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    const centerX = rect.width / 2;
-                    const centerY = rect.height / 2;
-                    const rotateX = ((y - centerY) / centerY) * -5;
-                    const rotateY = ((x - centerX) / centerX) * 5;
-                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-                });
-                card.addEventListener('mouseleave', () => {
-                    card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
-                    card.style.transition = 'transform 0.5s ease';
-                });
-            });
+        // Navbar Scroll Effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                navbar.classList.add('bg-white/80', 'backdrop-blur-md', 'shadow-sm');
+                navbar.classList.remove('py-4');
+                navbar.classList.add('py-2');
+            } else {
+                navbar.classList.remove('bg-white/80', 'backdrop-blur-md', 'shadow-sm');
+                navbar.classList.add('py-4');
+                navbar.classList.remove('py-2');
+            }
         });
-
-        // Activate Projects Grid
-        function activateProjects() {
-            const trigger = document.getElementById('launchPad');
-            const grid = document.getElementById('projectsGrid');
-            
-            trigger.classList.add('deployed');
-            grid.classList.add('active');
-        }
     </script>
 </body>
 </html>
